@@ -45,4 +45,4 @@ Pas de VC. Pas de team. Juste un protocole lâché dans la stratosphère.
 
 ---
 
-🛠️ Tu veux que je t’ajoute une version en anglais ou une version plus sérieuse orientée investisseurs ? Je peux aussi te proposer une bannière markdown, un badge GitHub Pages actif ou un widget social si tu veux pousser encore plus loin. Le hangar est ouvert 🦅💼
+
