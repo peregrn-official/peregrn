@@ -1,0 +1,40 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #0a0a0a;
+  color: #f4f4f4;
+  text-align: center;
+}
+header {
+  padding: 3rem 1rem;
+}
+.logo {
+  max-width: 160px;
+}
+.btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.8rem 1.6rem;
+  background: #00ffaa;
+  color: #000;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 6px;
+}
+section {
+  margin: 2rem auto;
+  padding: 1rem;
+  max-width: 700px;
+}
+.links a {
+  display: inline-block;
+  margin: 0.5rem;
+  color: #00ffaa;
+  text-decoration: none;
+}
+footer {
+  margin-top: 3rem;
+  padding: 1rem;
+  font-size: 0.9rem;
+  background: #111;
+}
