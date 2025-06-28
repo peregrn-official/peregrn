@@ -1,3 +1,49 @@
+body {
+  font-family: 'Inter', sans-serif;
+  background: #0c0c0c;
+  color: #f0f0f0;
+  margin: 0;
+  text-align: center;
+}
+header {
+  padding: 3rem 1rem;
+  background: #111;
+}
+.tagline {
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+.btn, .btn-nav {
+  background: #00ffaa;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out;
+}
+.btn:hover, .btn-nav:hover {
+  background: #44ffcc;
+  transform: scale(1.05);
+}
+section {
+  margin: 2rem auto;
+  max-width: 700px;
+}
+.social {
+  display: block;
+  margin: 1rem;
+  color: #00ffaa;
+  text-decoration: none;
+}
+footer {
+  background: #111;
+  padding: 2rem;
+  font-size: 0.8rem;
+}
+
+/* Navbar Falcon V2 */
 .navbar {
   position: sticky;
   top: 0;
@@ -27,18 +73,6 @@
   text-decoration: none;
   font-weight: 500;
 }
-.btn-nav {
-  background: #00ffaa;
-  padding: 0.5rem 0.9rem;
-  border-radius: 4px;
-  color: #000;
-  font-weight: bold;
-  transition: all 0.2s ease-in-out;
-}
-.btn-nav:hover {
-  background: #44ffcc;
-  transform: scale(1.05);
-}
 @media (max-width: 720px) {
   .nav-links {
     display: flex;
@@ -49,52 +83,4 @@
     flex-direction: column;
     align-items: flex-start;
   }
-}
-body {
-  font-family: 'Inter', sans-serif;
-  background: #0c0c0c;
-  color: #f0f0f0;
-  margin: 0;
-  text-align: center;
-}
-header {
-  padding: 3rem 1rem;
-  background: #111;
-}
-.logo {
-  width: 120px;
-  margin-bottom: 1rem;
-}
-.tagline {
-  font-style: italic;
-  margin-bottom: 1rem;
-}
-.btn {
-  background: #00ffaa;
-  padding: 0.8rem 1.5rem;
-  border: none;
-  color: #000;
-  font-weight: bold;
-  text-decoration: none;
-  border-radius: 4px;
-  transition: all 0.3s ease-in-out;
-}
-.btn:hover {
-  background: #44ffcc;
-  transform: scale(1.05);
-}
-section {
-  margin: 2rem auto;
-  max-width: 700px;
-}
-.social {
-  display: block;
-  margin: 1rem;
-  color: #00ffaa;
-  text-decoration: none;
-}
-footer {
-  background: #111;
-  padding: 2rem;
-  font-size: 0.8rem;
 }
