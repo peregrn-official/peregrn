@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <title>GATE PX — Accès Cryo</title>
+  <meta charset="UTF-8">
+  <title>Terminal PX — Accès Cryo</title>
   <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
   <style>
     body {
@@ -12,21 +12,6 @@
       text-align: center;
       padding: 60px 20px;
     }
-    img.logo {
-      width: 100px;
-      margin-bottom: 20px;
-      filter: drop-shadow(0 0 8px #00ffe1);
-    }
-    .scan {
-      margin-top: 30px;
-      font-size: 1.1em;
-      animation: scan 2s linear infinite;
-    }
-    @keyframes scan {
-      0% { opacity: 1; }
-      50% { opacity: 0.3; }
-      100% { opacity: 1; }
-    }
     button {
       background: #00ffe1;
       color: #000;
@@ -34,7 +19,7 @@
       padding: 14px 30px;
       font-size: 1em;
       cursor: pointer;
-      margin-top: 20px;
+      margin-top: 30px;
     }
     .hidden { display: none; }
     .debug {
@@ -47,58 +32,54 @@
       margin-left: auto;
       margin-right: auto;
     }
-    a {
-      color: #00ffe1;
-      text-decoration: none;
-    }
+    a { color: #00ffe1; text-decoration: none; }
   </style>
 </head>
 <body>
 
-  <img src="assets/logo.png" alt="PX Logo" class="logo" />
-  <h1>Terminal PX — Verrouillage Cryo</h1>
-  <p>Connexion requise : seuls les porteurs de $PEREGRN peuvent passer.</p>
+  <h1>🧊 TERMINAL PX</h1>
+  <p>Connexion requise — vérification cryo de ton solde $PEREGRN</p>
 
   <button id="connectBtn">🔗 Connecter Wallet</button>
-  <div class="scan hidden" id="scanText">🔍 Scan cryo en cours...</div>
 
-  <div id="status"></div>
-
+  <div id="status" style="margin-top: 30px;"></div>
   <div id="access" class="hidden">
-    <p>✅ Signature détectée.</p>
-    <a href="index.html"><button>➡ Accès autorisé</button></a>
+    <p id="rankLine"></p>
+    <div id="unlocks"></div>
   </div>
-
   <div id="denied" class="hidden">
-    <p>❌ Aucun $PEREGRN détecté.</p>
-    <p>Portail PX verrouillé pour ce voyageur.</p>
+    <p>❌ Signature insuffisante. Accès refusé.</p>
   </div>
 
   <div id="debug" class="debug hidden"></div>
 
-  <footer style="margin-top: 80px; font-size: 0.8em;">
-    &copy; 2025 PEREGRN — Surveillance PX en direct
-  </footer>
-
   <script>
     const mint = "DK3h83B1nbfTuP4pnAiXeiSQp7mHnZAZVeKa1Xmtpump";
 
+    function getPXRank(amount) {
+      if (amount >= 1_000_000) return { rank: "🦅 FALCON ARCANUM", files: ["ACCESS.html", "PX-VARIANT-EX.html", "PX-ARCHIVE.html", "PX-CORE.html", "PX-EXODUS.html", "claimNFT.html"] };
+      if (amount >= 500_000)  return { rank: "🟣 FAUCON ALPHA", files: ["ACCESS.html", "PX-VARIANT-EX.html", "PX-ARCHIVE.html", "PX-CORE.html"] };
+      if (amount >= 50_000)   return { rank: "🔶 FAUCON PÈLERIN", files: ["ACCESS.html", "PX-VARIANT-EX.html", "PX-ARCHIVE.html"] };
+      if (amount >= 20_000)   return { rank: "🔷 FAUCON TACTIQUE", files: ["ACCESS.html", "PX-VARIANT-EX.html"] };
+      if (amount >= 2_500)    return { rank: "🪶 PETIT FAUCON", files: ["ACCESS.html"] };
+      if (amount >= 100)      return { rank: "VOYAGEUR", files: [] };
+      return { rank: null, files: [] };
+    }
+
     document.getElementById("connectBtn").addEventListener("click", async () => {
-      const scanText = document.getElementById("scanText");
-      scanText.classList.remove("hidden");
+      const debug = document.getElementById("debug");
+      debug.innerHTML = "";
+      debug.classList.remove("hidden");
 
       if (!window.solana || !window.solana.isPhantom) {
-        alert("Phantom Wallet est requis !");
+        alert("Phantom Wallet requis.");
         return;
       }
 
       try {
         const resp = await window.solana.connect();
         const wallet = resp.publicKey.toString();
-
-        const debug = document.getElementById("debug");
-        debug.classList.remove("hidden");
-        debug.innerHTML = `<strong>DEBUG PX</strong><br>Wallet connecté : ${wallet}<br><br>`;
+        debug.innerHTML += `🔗 Wallet connecté : ${wallet}<br><br>`;
 
         const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl("mainnet-beta"));
         const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
@@ -106,32 +87,32 @@
           { programId: new solanaWeb3.PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA") }
         );
 
-        debug.innerHTML += `Jetons scannés : ${tokenAccounts.value.length}<br>Recherche du mint : ${mint}<br>`;
-
-        let found = false;
+        let amount = 0;
         tokenAccounts.value.forEach((account) => {
           const info = account.account.data.parsed.info;
-          if (info.mint === mint && parseFloat(info.tokenAmount.uiAmount) > 0) {
-            debug.innerHTML += `→ ${info.tokenAmount.uiAmount} $PEREGRN détectés ✅<br>`;
-            found = true;
+          if (info.mint === mint) {
+            amount = parseFloat(info.tokenAmount.uiAmount);
           }
         });
 
-        if (found) {
+        debug.innerHTML += `🧬 $PEREGRN détectés : ${amount}<br>`;
+
+        const rank = getPXRank(amount);
+        if (rank.rank) {
           document.getElementById("access").classList.remove("hidden");
+          document.getElementById("rankLine").innerText = `🛰️ Rang PX : ${rank.rank}`;
+          const files = rank.files.map(file => `<a href="${file}" target="_blank">➤ ${file}</a>`).join("<br>");
+          document.getElementById("unlocks").innerHTML = `<br>🔓 Accès débloqués :<br>${files}`;
         } else {
           document.getElementById("denied").classList.remove("hidden");
         }
 
-        scanText.classList.add("hidden");
-
       } catch (e) {
         console.error(e);
-        alert("Erreur lors de la connexion.");
+        alert("Erreur lors de la connexion au wallet.");
       }
     });
   </script>
 
 </body>
 </html>
-
