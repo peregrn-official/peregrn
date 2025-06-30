@@ -7,10 +7,7 @@
 </head>
 <body>
 
-  <div id="cryo-loader">
-    <div class="cryo-pulse"></div>
-    <p>Décompression cryogénique en cours...</p>
-  </div>
+  <div id="cryo-loader"><div class="cryo-pulse"></div><p>Décompression cryogénique en cours...</p></div>
 
   <nav>
     <ul>
@@ -19,6 +16,7 @@
       <li><a href="faq.html">FAQ</a></li>
       <li><a href="flightlog.html" class="active">Journal de vol</a></li>
       <li><a href="registre.html">Registre Cryo</a></li>
+      <li><a href="lore.html">Lore</a></li>
     </ul>
   </nav>
 
@@ -26,7 +24,7 @@
   <section>
     <p>📅 28.06.2025 — Lancement sur pump.fun</p>
     <p>📅 29.06.2025 — Premier holder → fragment PX-000</p>
-    <p>📅 30.06.2025 — Construction du registre et style cryo activé</p>
+    <p>📅 30.06.2025 — Construction du registre et activation du protocole</p>
   </section>
 
   <script>
@@ -35,7 +33,7 @@
       if (loader) {
         loader.style.transition = "opacity 0.5s ease";
         loader.style.opacity = 0;
-        setTimeout(() => loader.style.display = "none", 500);
+        setTimeout(() => (loader.style.display = "none"), 500);
       }
     });
   </script>
