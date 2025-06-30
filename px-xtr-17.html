@@ -4,53 +4,98 @@
   <meta charset="UTF-8" />
   <title>PX-XTR-17 — PEREGRN</title>
   <link rel="stylesheet" href="style.css" />
+
+  <style>
+    body {
+      background-color: #000;
+      color: #00ffe1;
+      font-family: monospace;
+      padding: 40px;
+      overflow-x: hidden;
+    }
+    .typewriter {
+      white-space: pre-line;
+      overflow: hidden;
+      border-right: 2px solid #00ffe1;
+      animation: blink 0.8s infinite;
+      font-size: 1.2em;
+      min-height: 120px;
+    }
+    @keyframes blink {
+      0%, 100% { border-color: #00ffe1; }
+      50% { border-color: transparent; }
+    }
+    .artifact img {
+      margin-top: 30px;
+      width: 300px;
+      max-width: 80%;
+      filter: drop-shadow(0 0 10px #00ffe1);
+    }
+    .exe-mode {
+      background: rgba(0, 255, 225, 0.1);
+      border: 1px solid #00ffe1;
+      padding: 20px;
+      margin-top: 40px;
+      display: none;
+      color: #ffffff;
+    }
+    a {
+      color: #00ffe1;
+      text-decoration: none;
+    }
+    footer {
+      margin-top: 60px;
+      font-size: 0.9em;
+      color: #00ffe1;
+    }
+  </style>
+
 </head>
 <body>
 
-  <div id="cryo-loader">
-    <div class="cryo-pulse"></div>
-    <p>Décompression cryogénique en cours...</p>
+  <div class="typewriter" id="terminal-output"></div>
+
+  <div class="artifact">
+    <img src="assets/PX-XTR-17.png" alt="Fragment PX-XTR" />
   </div>
 
-  <nav>
-    <ul>
-      <li><a href="index.html">Accueil</a></li>
-      <li><a href="about.html">À propos</a></li>
-      <li><a href="faq.html">FAQ</a></li>
-      <li><a href="flightlog.html">Journal de vol</a></li>
-      <li><a href="registre.html">Registre Cryo</a></li>
-      <li><a href="lore.html">Lore</a></li>
-      <li><a href="ACCESS.html">ACCESS</a></li>
-    </ul>
-  </nav>
-
-  <div class="vault">
-    <h1>PX-XTR-17 — Fragment activé</h1>
-    <p>Tu as franchi une porte qui n’était pas là.</p>
-
-    <div class="fragment-revealed">
-      > PX-XTR : Fragment extra-spectral<br>
-      > Synchronisation réussie<br><br>
-      “Ce qui était scellé parle à nouveau.”<br>
-      “L’empreinte cryo a laissé une trace.”
-    </div>
-
-    <p style="margin-top: 40px;">
-      <a href="index.html" style="color: #00ffe1;">↩ Retourner à l’origine</a>
-    </p>
+  <div class="exe-mode" id="exe-container">
+    <h2>PX-XTR.EXE : Accès Avancé</h2>
+    <p>Vous avez exécuté un chemin que peu trouveront.<br>Le Fragment spectral vous observe désormais.</p>
+    <p><a href="https://peregrn-official.github.io/peregrn/PX-VARIANT-EX.html">→ Accéder au Fragment EX</a></p>
   </div>
+
+  <p style="margin-top: 40px;"><a href="index.html">↩ Retour à l’origine</a></p>
 
   <footer>
-    <p>&copy; 2025 PEREGRN — fragment XTR recalibré</p>
+    &copy; 2025 PEREGRN — Fragment XTR déverrouillé
   </footer>
 
   <script>
-    window.addEventListener("load", () => {
-      const loader = document.getElementById("cryo-loader");
-      if (loader) {
-        loader.style.transition = "opacity 0.5s ease";
-        loader.style.opacity = 0;
-        setTimeout(() => loader.style.display = "none", 500);
+    const text = `SYNCHRONISATION CRYO... OK
+> Fragment PX-XTR-17 détecté
+> Spectre extra-dimensionnel stabilisé
+
+"Ce que tu as ouvert n’a pas encore de nom..."`;
+
+    let i = 0;
+    const speed = 40;
+    const output = document.getElementById("terminal-output");
+
+    function typeWriter() {
+      if (i < text.length) {
+        output.textContent += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      }
+    }
+    typeWriter();
+
+    // Bonus unlock: EXE
+    document.addEventListener("keydown", function(e) {
+      window.unlocked = (window.unlocked || "") + e.key;
+      if (window.unlocked.toUpperCase().includes("EXE")) {
+        document.getElementById("exe-container").style.display = "block";
       }
     });
   </script>
