@@ -13,6 +13,16 @@
     section { max-width: 900px; margin: 0 auto; padding: 20px; }
   </style>
 </head>
+  <script>
+  document.addEventListener("keydown", function(e) {
+    const keys = [];
+    keys.push(e.key);
+    if (keys.slice(-6).join("").toUpperCase() === "VAULT1") {
+      window.location.href = "vault.html";
+    }
+  });
+</script>
+
 <body>
 
   <div id="cryo-loader"><div class="cryo-pulse"></div><p>Décompression cryogénique en cours...</p></div>
