@@ -4,45 +4,37 @@
   <meta charset="UTF-8" />
   <title>ACCESS — PEREGRN</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    body {
-      background-color: #000;
-      color: #00ffe1;
-      font-family: monospace;
-      padding: 40px 20px;
-    }
-    .terminal {
-      max-width: 800px;
-      margin: 0 auto;
-      background: #0a0a0a;
-      border: 1px solid #222;
-      border-radius: 8px;
-      padding: 30px;
-      box-shadow: 0 0 20px rgba(0, 255, 240, 0.1);
-    }
-    .input-line {
-      margin-top: 20px;
-    }
-    input {
-      background: #000;
-      color: #00ffe1;
-      border: none;
-      border-bottom: 1px solid #00ffe1;
-      font-size: 1rem;
-      width: 100%;
-      padding: 8px;
-      outline: none;
-    }
-    .unlocked {
-      margin-top: 30px;
-      color: #00ffab;
-      white-space: pre-wrap;
-    }
-  </style>
+  <script>
+    document.addEventListener("keydown", function(e) {
+      window.vaultKeys = (window.vaultKeys || "") + e.key;
+      if (window.vaultKeys.toUpperCase().includes("VAULT1")) {
+        window.location.href = "vault.html";
+      }
+    });
+  </script>
 </head>
 <body>
 
-  <div class="terminal" id="terminal">
+  <div id="cryo-loader">
+    <div class="cryo-pulse"></div>
+    <p>Décompression cryogénique en cours...</p>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="about.html">À propos</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="flightlog.html">Journal de vol</a></li>
+      <li><a href="registre.html">Registre Cryo</a></li>
+      <li><a href="lore.html">Lore</a></li>
+      <li><a href="ACCESS.html" class="active">ACCESS</a></li>
+    </ul>
+  </nav>
+
+  <h1>Terminal Cryo</h1>
+
+  <div class="terminal">
     <p>> INIT.ACCESS [OK]</p>
     <p>> Listening for fragment...</p>
 
@@ -54,18 +46,31 @@
     <div id="result" class="unlocked"></div>
   </div>
 
+  <footer>
+    <p>&copy; 2025 PEREGRN — cryo-compilé sans roadmap</p>
+  </footer>
+
   <script>
     function checkCode(e) {
       if (e.key === "Enter") {
         const input = document.getElementById("access-code").value.trim().toUpperCase();
         const output = document.getElementById("result");
         if (input === "PX-006") {
-          output.innerHTML = "> ACCÈS ACCORDÉ :<br>> Lecture du fragment atmosphérique…<br><br>➤ Altitude n’est pas une position. C’est une mémoire de trajectoire.\n➤ Liaison cryo-ouverte. Decrypt.sh en cours.";
+          output.innerHTML = "> ACCÈS ACCORDÉ :<br>> Lecture du fragment atmosphérique…<br><br>➤ Altitude n’est pas une position. C’est une mémoire de trajectoire.<br>➤ Liaison cryo-ouverte. Decrypt.sh en cours.";
         } else {
           output.innerHTML = "> Fragment non reconnu. Try again or evacuate.";
         }
       }
     }
+
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("cryo-loader");
+      if (loader) {
+        loader.style.transition = "opacity 0.5s ease";
+        loader.style.opacity = 0;
+        setTimeout(() => loader.style.display = "none", 500);
+      }
+    });
   </script>
 
 </body>
