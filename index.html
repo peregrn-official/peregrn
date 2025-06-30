@@ -4,25 +4,15 @@
   <meta charset="UTF-8" />
   <title>$PEREGRN — Origine</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    header, section, footer { text-align: center; }
-    .hero { display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; margin: 60px auto 30px; }
-    .hero img.logo { width: 80px; height: auto; border-radius: 8px; }
-    .hero-text h1 { font-size: 2.2rem; color: #00ffc6; margin: 0; }
-    .hero-text p { font-size: 1rem; color: #ccc; margin-top: 8px; }
-    section { max-width: 900px; margin: 0 auto; padding: 20px; }
-  </style>
-</head>
   <script>
-  document.addEventListener("keydown", function(e) {
-    const keys = [];
-    keys.push(e.key);
-    if (keys.slice(-6).join("").toUpperCase() === "VAULT1") {
-      window.location.href = "vault.html";
-    }
-  });
-</script>
-
+    document.addEventListener("keydown", function(e) {
+      window.vaultKeys = (window.vaultKeys || "") + e.key;
+      if (window.vaultKeys.toUpperCase().includes("VAULT1")) {
+        window.location.href = "vault.html";
+      }
+    });
+  </script>
+</head>
 <body>
 
   <div id="cryo-loader"><div class="cryo-pulse"></div><p>Décompression cryogénique en cours...</p></div>
@@ -54,9 +44,12 @@
     🌐 Contrat Solana : <code>DK3h83B1nbfTuP4pnAiXeiSQp7mHnZAZVeKa1Xmtpump</code><br>
     🧠 Founder Wallet : <code>9AnXyrdk8nYVDbTSGDYmNSbx3MdSSY6HSguHsiMcBoeq</code></p>
     <p>Suivre la trajectoire : <a href="https://x.com/satoshi_earn" target="_blank">@satoshi_earn</a></p>
+    <p><a href="ACCESS.html">🔓 Déverrouiller un fragment</a></p>
   </section>
 
-  <footer><p>&copy; 2025 PEREGRN — cryo-compilé sans roadmap</p></footer>
+  <footer>
+    <p>&copy; 2025 PEREGRN — cryo-compilé sans roadmap</p>
+  </footer>
 
   <script>
     window.addEventListener("load", () => {
@@ -68,5 +61,6 @@
       }
     });
   </script>
+
 </body>
 </html>
