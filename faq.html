@@ -2,59 +2,47 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>$PEREGRN – FAQ du Bitume</title>
+  <title>FAQ — PEREGRN</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <nav class="navbar">
-    <div class="nav-logo">
-      <a href="index.html">
-        <img src="assets/logo.png" alt="Logo $PEREGRN" />
-        <span>$PEREGRN</span>
-      </a>
-    </div>
-    <div class="nav-links">
-      <a href="index.html">Accueil</a>
-      <a href="about.html">À propos</a>
-      <a href="flightlog.html">Journal</a>
-      <a href="faq.html">FAQ</a>
-      <a href="https://pump.fun/coin/DK3h83B1nbfTuP4pnAiXeiSQp7mHnZAZVeKa1Xmtpump" class="btn-nav">🚀 Acheter</a>
-    </div>
+
+  <div id="cryo-loader">
+    <div class="cryo-pulse"></div>
+    <p>Décompression cryogénique en cours...</p>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="about.html">À propos</a></li>
+      <li><a href="faq.html" class="active">FAQ</a></li>
+      <li><a href="flightlog.html">Journal de vol</a></li>
+      <li><a href="registre.html">Registre Cryo</a></li>
+    </ul>
   </nav>
 
-  <header>
-    <h1>📚 FAQ du Bitume</h1>
-    <p class="tagline">Des réponses claires, même quand le volant tremble.</p>
-  </header>
+  <h1>FAQ</h1>
+  <section>
+    <h2>Est-ce un projet sérieux ?</h2>
+    <p>Suffisamment pour ne rien promettre.</p>
 
-  <main>
-    <section>
-      <h2>❓ C’est un vrai projet ou un troll ?</h2>
-      <p>Les deux. L’intention est sérieuse. La forme est libre.</p>
+    <h2>Quand la roadmap ?</h2>
+    <p>Il n'y en a pas. C'est le protocole qui trace la route.</p>
 
-      <h2>❓ Y’a une équipe ?</h2>
-      <p>Non. Juste un gars, un laptop et une Clio diesel.</p>
+    <h2>Qui dirige ?</h2>
+    <p>Personne. Ou tout le monde. Le bitume est horizontal.</p>
+  </section>
 
-      <h2>❓ Pourquoi un faucon ?</h2>
-      <p>Parce que ça plonge à 389 km/h et ça freine pas.</p>
-
-      <h2>❓ Y’aura un airdrop ?</h2>
-      <p>Peut-être. Peut-être pas. Voler, c’est mériter.</p>
-
-      <h2>❓ Une roadmap ?</h2>
-      <p>Non. Juste une direction : en avant.</p>
-
-      <h2>❓ Où acheter ?</h2>
-      <p>Sur <a href="https://pump.fun/coin/DK3h83B1nbfTuP4pnAiXeiSQp7mHnZAZVeKa1Xmtpump">pump.fun</a>. Pas de presale. Pas de whitelist.</p>
-    </section>
-
-    <section>
-      <a href="index.html" class="btn">⬅️ Retour au cockpit</a>
-    </section>
-  </main>
-
-  <footer>
-    <p>© $PEREGRN – Réponses non contractuelles, mais toujours directes.</p>
-  </footer>
+  <script>
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("cryo-loader");
+      if (loader) {
+        loader.style.transition = "opacity 0.5s ease";
+        loader.style.opacity = 0;
+        setTimeout(() => loader.style.display = "none", 500);
+      }
+    });
+  </script>
 </body>
 </html>
