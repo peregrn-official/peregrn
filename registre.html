@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Registre Cryo — PEREGRN</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="cryo-loader"><div class="cryo-pulse"></div><p>Décompression cryogénique en cours...</p></div>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="about.html">À propos</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="flightlog.html">Journal de vol</a></li>
+      <li><a href="registre.html" class="active">Registre Cryo</a></li>
+      <li><a href="lore.html">Lore</a></li>
+    </ul>
+  </nav>
+
+  <h1>Registre Cryo</h1>
+  <section>
+    <p>PX-000 | Détenteur initial</p>
+    <p>PX-001 | Signal détecté</p>
+    <p>PX-002 | Fracture confirmée</p>
+    <p>PX-003 | Propagation stable</p>
+    <p>PX-004 | Reçu à Tokyo</p>
+    <p>PX-005 | FONDATEUR</p>
+    <p>PX-006 | ACCESS</p>
+    <p>PX-007 | Fragment miroir</p>
+    <p>PX-008 | Cryo-mutation</p>
+    <p>PX-009 | Lien occulte</p>
+    <p>PX-010 | Obsolescence zéro</p>
+  </section>
+
+  <script>
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("cryo-loader");
+      if (loader) {
+        loader.style.transition = "opacity 0.5s ease";
+        loader.style.opacity = 0;
+        setTimeout(() => (loader.style.display = "none"), 500);
+      }
+    });
+  </script>
+
+</body>
+</html>
