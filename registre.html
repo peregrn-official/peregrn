@@ -1,14 +1,52 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <title>Registre Cryo — PEREGRN</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .fragment {
+      max-width: 320px;
+      margin: 30px auto;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .fragment img {
+      width: 100%;
+      border-radius: 6px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .fragment:hover img {
+      transform: scale(1.03);
+      box-shadow: 0 0 10px #00ffc6aa;
+    }
+
+    .px-meta {
+      text-align: left;
+      max-width: 300px;
+      margin: 10px auto 0;
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+
+    .px-meta h3 {
+      font-size: 1.1rem;
+      color: #00ffc6;
+      margin-bottom: 4px;
+    }
+
+    .px-meta p {
+      margin: 4px 0;
+      line-height: 1.3;
+    }
+  </style>
   <script>
     document.addEventListener("keydown", function(e) {
       window.vaultKeys = (window.vaultKeys || "") + e.key;
       if (window.vaultKeys.toUpperCase().includes("VAULT1")) {
-        window.location.href = "vault.html";
+        window.location.href = "px-xtr-17.html";
       }
     });
   </script>
@@ -31,33 +69,111 @@
 
   <h1>Registre Cryo</h1>
   <section>
-    <div class="fragment"><img src="assets/PX-000.png" alt="PX-000" /><p>PX-000 | Détenteur initial</p></div>
-    <div class="fragment"><img src="assets/PX-001.png" alt="PX-001" /><p>PX-001 | Signal détecté</p></div>
-    <div class="fragment"><img src="assets/PX-002.png" alt="PX-002" /><p>PX-002 | Fracture confirmée</p></div>
-    <div class="fragment"><img src="assets/PX-003.png" alt="PX-003" /><p>PX-003 | Propagation stable</p></div>
-    <div class="fragment"><img src="assets/PX-004.png" alt="PX-004" /><p>PX-004 | Reçu à Tokyo</p></div>
-    <div class="fragment"><img src="assets/PX-005.png" alt="PX-005" /><p>PX-005 | FONDATEUR</p></div>
-    <div class="fragment"><img src="assets/PX-006.png" alt="PX-006" /><p>PX-006 | ACCESS</p></div>
-    <div class="fragment"><img src="assets/PX-007.png" alt="PX-007" /><p>PX-007 | Fragment miroir</p></div>
-    <div class="fragment"><img src="assets/PX-008.png" alt="PX-008" /><p>PX-008 | Cryo-mutation</p></div>
-    <div class="fragment"><img src="assets/PX-009.png" alt="PX-009" /><p>PX-009 | Lien occulte</p></div>
-    <div class="fragment"><img src="assets/PX-010.png" alt="PX-010" /><p>PX-010 | Obsolescence zéro</p></div>
-  </section>
 
-  <footer>
-    <p>&copy; 2025 PEREGRN — cryo-compilé sans roadmap</p>
-  </footer>
+    <!-- PX-000 à PX-010 injectés ici -->
+    <!-- Tu peux scroller ou rechercher chaque fragment individuellement -->
 
-  <script>
-    window.addEventListener("load", () => {
-      const loader = document.getElementById("cryo-loader");
-      if (loader) {
-        loader.style.transition = "opacity 0.5s ease";
-        loader.style.opacity = 0;
-        setTimeout(() => loader.style.display = "none", 500);
-      }
-    });
-  </script>
+    <div class="fragment">
+      <img src="assets/PX-000.png" alt="PX-000" />
+      <div class="px-meta">
+        <h3>PX-000 — Silence Initial</h3>
+        <p><strong>Code :</strong> PX-000 | SILENCE</p>
+        <p><strong>Quantité :</strong> 1/1</p>
+        <p><strong>Description :</strong> “Ceux qui ne scrollent pas… lisent.”</p>
+        <p><strong>Nature :</strong> Origine, inertie, seuil</p>
+      </div>
+    </div>
 
-</body>
-</html>
+    <div class="fragment">
+      <img src="assets/PX-001.png" alt="PX-001" />
+      <div class="px-meta">
+        <h3>PX-001 — Lecture Inavouée</h3>
+        <p><strong>Code :</strong> PX-001 | LECTURE</p>
+        <p><strong>Quantité :</strong> 5</p>
+        <p><strong>Description :</strong> “Tu lis. Mais tu fais comme si ce n’était rien.”</p>
+        <p><strong>Nature :</strong> Lecture discrète, fragmentation assumée</p>
+      </div>
+    </div>
+
+    <div class="fragment">
+      <img src="assets/PX-002.png" alt="PX-002" />
+      <div class="px-meta">
+        <h3>PX-002 — Ligne Reconnaissable</h3>
+        <p><strong>Code :</strong> PX-002 | PASSAGE</p>
+        <p><strong>Quantité :</strong> 3</p>
+        <p><strong>Description :</strong> “Tu vois un visuel ? Certains voient un passage.”</p>
+        <p><strong>Nature :</strong> Bitume mental, reconnaissance furtive</p>
+      </div>
+    </div>
+
+    <div class="fragment">
+      <img src="assets/PX-003.png" alt="PX-003" />
+      <div class="px-meta">
+        <h3>PX-003 — Refus du Produit</h3>
+        <p><strong>Code :</strong> PX-003 | REFUS</p>
+        <p><strong>Quantité :</strong> 2</p>
+        <p><strong>Description :</strong> “Pas à vendre. Pas à comprendre. À porter.”</p>
+        <p><strong>Nature :</strong> Détournement, négation de marché</p>
+      </div>
+    </div>
+
+    <div class="fragment">
+      <img src="assets/PX-004.png" alt="PX-004" />
+      <div class="px-meta">
+        <h3>PX-004 — Détention Mentale</h3>
+        <p><strong>Code :</strong> PX-004 | DÉTENTION</p>
+        <p><strong>Quantité :</strong> 5</p>
+        <p><strong>Description :</strong> “Tu ne détiens rien. Tu te souviens d’avoir lu.”</p>
+        <p><strong>Nature :</strong> Mémoire, boucle mentale, écho intérieur</p>
+      </div>
+    </div>
+
+    <div class="fragment">
+      <img src="assets/PX-005.png" alt="PX-005" />
+      <div class="px-meta">
+        <h3>PX-005 — Accès Fondateur</h3>
+        <p><strong>Code :</strong> PX-005 | FONDATEUR</p>
+        <p><strong>Quantité :</strong> 1/1</p>
+        <p><strong>Description :</strong> “Ce n’est pas un pass. C’est la preuve que tu étais là quand il n’y avait rien.”</p>
+        <p><strong>Nature :</strong> Fragment-clé, transmission silencieuse</p>
+      </div>
+    </div>
+
+    <div class="fragment">
+      <img src="assets/PX-006.png" alt="PX-006" />
+      <div class="px-meta">
+        <h3>PX-006 — Altitude</h3>
+        <p><strong>Code :</strong> PX-006 | ACCESS</p>
+        <p><strong>Quantité :</strong> 3</p>
+        <p><strong>Description :</strong> “L’altitude n’est pas une position. ➤ C’est une mémoire de trajectoire.”</p>
+        <p><strong>Nature :</strong> Capsule atmosphérique, friction et descente</p>
+      </div>
+    </div>
+
+    <div class="fragment">
+      <img src="assets/PX-007.png" alt="PX-007" />
+      <div class="px-meta">
+        <h3>PX-007 — Signal Réversible</h3>
+        <p><strong>Code :</strong> PX-007 | MIROIR</p>
+        <p><strong>Quantité :</strong> 2</p>
+        <p><strong>Description :</strong> “Tu crois regarder un fragment. Mais lui te regarde aussi.”</p>
+        <p><strong>Nature :</strong> Réflexion inverse, surveillance silencieuse, écho-retour</p>
+      </div>
+    </div>
+
+    <div class="fragment">
+      <img src="assets/PX-008.png" alt="PX-008" />
+      <div class="px-meta">
+        <h3>PX-008 — Mutation Cryo-Instable</h3>
+        <p><strong>Code :</strong> PX-008 | MUTATION</p>
+        <p><strong>Quantité :</strong> 4</p>
+        <p><strong>Description :</strong> “Chaque détenteur altère le protocole. Chaque lecture le recompile.”</p>
+        <p><strong>Nature :</strong> Évolution non déterministe, charge variable, contamination lente</p>
+      </div>
+    </div>
+
+    <div class="fragment">
+      <img src="assets/PX-009.png" alt="PX-009" />
+      <div class="px-meta">
+        <h3>PX-009 — Lien Occulte</h3>
+        <p><strong>Code :</strong> PX-009 | OCC
