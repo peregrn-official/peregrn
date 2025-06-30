@@ -7,10 +7,7 @@
 </head>
 <body>
 
-  <div id="cryo-loader">
-    <div class="cryo-pulse"></div>
-    <p>Décompression cryogénique en cours...</p>
-  </div>
+  <div id="cryo-loader"><div class="cryo-pulse"></div><p>Décompression cryogénique en cours...</p></div>
 
   <nav>
     <ul>
@@ -19,6 +16,7 @@
       <li><a href="faq.html">FAQ</a></li>
       <li><a href="flightlog.html">Journal de vol</a></li>
       <li><a href="registre.html">Registre Cryo</a></li>
+      <li><a href="lore.html">Lore</a></li>
     </ul>
   </nav>
 
@@ -37,7 +35,7 @@
       if (loader) {
         loader.style.transition = "opacity 0.5s ease";
         loader.style.opacity = 0;
-        setTimeout(() => loader.style.display = "none", 500);
+        setTimeout(() => (loader.style.display = "none"), 500);
       }
     });
   </script>
