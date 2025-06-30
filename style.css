@@ -1,4 +1,4 @@
-/* === RESET === */
+/* === RESET GÉNÉRAL === */
 body {
   margin: 0;
   background-color: #000;
@@ -10,35 +10,33 @@ body {
 nav ul {
   list-style: none;
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
   padding: 10px;
   margin: 0;
   background-color: #111;
 }
-
 nav a {
   color: #00ffe1;
   text-decoration: none;
   padding: 5px 10px;
 }
-
 nav a.active {
   border-bottom: 2px solid #00ffe1;
 }
 
-/* === SECTIONS GLOBALES === */
-h1, h2, p, section, footer {
+/* === STRUCTURE CENTRÉE === */
+h1, h2, p, section, footer, header {
   text-align: center;
 }
-
 section {
   max-width: 900px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* === HEADER AVEC LOGO === */
+/* === HEADER HERO (avec logo + titre) === */
 .hero {
   display: flex;
   justify-content: center;
@@ -48,33 +46,30 @@ section {
   margin: 60px auto 30px;
   text-align: left;
 }
-
 .hero img.logo {
   width: 80px;
   height: auto;
   border-radius: 8px;
 }
-
 .hero-text h1 {
   font-size: 2.2rem;
   margin: 0;
   color: #00ffc6;
 }
-
 .hero-text p {
   font-size: 1rem;
   color: #ccc;
   margin-top: 8px;
 }
 
-/* === FOOTER === */
+/* === PIED DE PAGE === */
 footer {
   margin-top: 60px;
   color: #666;
   font-size: 0.9rem;
 }
 
-/* === LOADER === */
+/* === LOADER CRYO === */
 .cryo-pulse {
   width: 20px;
   height: 20px;
@@ -83,7 +78,6 @@ footer {
   animation: pulse 1s infinite alternate;
   margin: 0 auto 10px;
 }
-
 #cryo-loader {
   background: #000;
   color: #00ffc6;
@@ -96,13 +90,32 @@ footer {
   align-items: center;
   justify-content: center;
 }
-
 @keyframes pulse {
   0% { transform: scale(1); opacity: 0.5; }
   100% { transform: scale(1.2); opacity: 1; }
 }
 
-/* === TERMINAL STYLES (ACCESS / VAULT / 404) === */
+/* === FRAGMENTS PX POUR registre.html === */
+.fragment {
+  display: inline-block;
+  margin: 20px;
+  text-align: center;
+}
+.fragment img {
+  width: 150px;
+  height: auto;
+  border: 2px solid #00ffc6;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto 8px;
+}
+.fragment p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #00ffe1;
+}
+
+/* === TERMINAUX (ACCESS / VAULT) === */
 input[type="text"] {
   background: #000;
   color: #00ffe1;
@@ -112,4 +125,27 @@ input[type="text"] {
   width: 100%;
   padding: 8px;
   outline: none;
+}
+.terminal, .vault {
+  background: #0a0a0a;
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 0 20px rgba(0, 255, 240, 0.1);
+  max-width: 800px;
+  margin: 60px auto;
+}
+
+/* === 404 === */
+.error-code {
+  font-size: 2.5rem;
+  color: #ff0044;
+}
+.glitch {
+  color: #888;
+  margin-top: 10px;
+}
+a {
+  color: #00ffe1;
+  text-decoration: none;
 }
