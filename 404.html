@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <title>404 — Fragment introuvable</title>
   <link rel="stylesheet" href="style.css" />
+  <script>
+    document.addEventListener("keydown", function(e) {
+      window.vaultKeys = (window.vaultKeys || "") + e.key;
+      if (window.vaultKeys.toUpperCase().includes("VAULT1")) {
+        window.location.href = "vault.html";
+      }
+    });
+  </script>
   <style>
     body {
       background-color: #000;
