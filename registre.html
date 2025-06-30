@@ -1,22 +1,31 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Registre PEREGRN</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Registre Cryo — PEREGRN</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+  <div id="cryo-loader">
+    <div class="cryo-pulse"></div>
+    <p>Décompression cryogénique en cours...</p>
+  </div>
+
   <nav>
-  <ul>
-    <li><a href="index.html">Accueil</a></li>
-    <li><a href="about.html">À propos</a></li>
-    <li><a href="faq.html">FAQ</a></li>
-    <li><a href="flightlog.html">Journal de vol</a></li>
-    <li><a href="registre.html" class="active">Registre Cryo</a></li>
-  </ul>
-</nav>
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="about.html">À propos</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="flightlog.html">Journal de vol</a></li>
+      <li><a href="registre.html" class="active">Registre Cryo</a></li>
+    </ul>
+  </nav>
+
   <h1>Registre Cryo — Séquence PX</h1>
   <section id="registre-px">
+
+    <!-- ↓↓↓ Coller ici les blocs PX-000 à PX-010 ↓↓↓ -->
 
     <div class="fragment" id="PX-000">
       <img src="assets/PX-000.png" alt="PX-000 | SILENCE">
@@ -139,6 +148,10 @@
       </div>
     </div>
 
+    <!-- ↑↑↑ Fin des fragments PX ↑↑↑ -->
+
   </section>
-</body>
-</html>
+
+  <script>
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("cr
