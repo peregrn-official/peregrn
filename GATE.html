@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Accès PEREGRN — Terminal Cryo</title>
+  <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+  <style>
+    body {
+      background: #000;
+      color: #00ffe1;
+      font-family: monospace;
+      text-align: center;
+      padding: 80px 20px;
+    }
+    button {
+      background: #00ffe1;
+      color: #000;
+      border: none;
+      padding: 14px 30px;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 30px;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <h1>🧊 Terminal Cryo PX</h1>
+  <p>Connexion requise : seul un Porteur de $PEREGRN peut franchir cette passerelle.</p>
+
+  <button id="connectBtn">🔗 Connecter Wallet</button>
+
+  <div id="status" style="margin-top: 40px;"></div>
+  <div id="access" class="hidden">
+    <p>✅ Token détecté. Accès autorisé.</p>
+    <a href="index.html"><button>➡ Entrer dans le site</button></a>
+  </div>
+  <div id="denied" class="hidden">
+    <p>❌ Aucun $PEREGRN détecté sur ce wallet.</p>
+    <p>Ce portail ne s’ouvrira qu’aux véritables Porteurs.</p>
+  </div>
+
+  <script>
+    const mint = "DK3h83B1nbfTuP4pnAiXeiSQp7mHnZAZVeKa1Xmtpump";
+
+    document.getElementById("connectBtn").addEventListener("click", async () => {
+      if (!window.solana || !window.solana.isPhantom) {
+        alert("Phantom Wallet est requis !");
+        return;
+      }
+
+      try {
+        const resp = await window.solana.connect();
+        const wallet = resp.publicKey.toString();
+        document.getElementById("status").innerText = "🔍 Vérification du solde en cours...";
+
+        // Connexion à Solana mainnet
+        const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl("mainnet-beta"));
+
+        const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
+          new solanaWeb3.PublicKey(wallet),
+          { programId: new solanaWeb3.PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA") }
+        );
+
+        let found = false;
+        tokenAccounts.value.forEach((account) => {
+          const info = account.account.data.parsed.info;
+          if (info.mint === mint && parseFloat(info.tokenAmount.uiAmount) > 0) {
+            found = true;
+          }
+        });
+
+        if (found) {
+          document.getElementById("access").classList.remove("hidden");
+        } else {
+          document.getElementById("denied").classList.remove("hidden");
+        }
+        document.getElementById("status").innerText = "";
+
+      } catch (e) {
+        console.error(e);
+        alert("Erreur lors de la connexion au wallet.");
+      }
+    });
+  </script>
+
+</body>
+</html>
