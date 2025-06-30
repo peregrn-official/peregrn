@@ -2,65 +2,42 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>$PEREGRN – À propos</title>
+  <title>À propos — PEREGRN</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <nav class="navbar">
-    <div class="nav-logo">
-      <a href="index.html">
-        <img src="assets/logo.png" alt="Logo $PEREGRN" />
-        <span>$PEREGRN</span>
-      </a>
-    </div>
-    <div class="nav-links">
-      <a href="index.html">Accueil</a>
-      <a href="about.html">À propos</a>
-      <a href="flightlog.html">Journal</a>
-      <a href="faq.html">FAQ</a>
-      <a href="https://pump.fun/coin/DK3h83B1nbfTuP4pnAiXeiSQp7mHnZAZVeKa1Xmtpump" class="btn-nav">🚀 Acheter</a>
-    </div>
+
+  <div id="cryo-loader">
+    <div class="cryo-pulse"></div>
+    <p>Décompression cryogénique en cours...</p>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="about.html" class="active">À propos</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="flightlog.html">Journal de vol</a></li>
+      <li><a href="registre.html">Registre Cryo</a></li>
+    </ul>
   </nav>
 
-  <header>
-    <h1>🧬 À propos de $PEREGRN</h1>
-    <p class="tagline">Un token, une trajectoire, zéro pitch deck.</p>
-  </header>
+  <h1>À propos de $PEREGRN</h1>
+  <section>
+    <p>$PEREGRN ne promet rien.</p>
+    <p>Il n’explique pas. Il existe. Pas de VC. Pas de team. Juste un protocole lâché dans la stratosphère.</p>
+    <p>Code ou silence.</p>
+  </section>
 
-  <main>
-    <section>
-      <h2>🎤 Qui pilote ce faucon ?</h2>
-      <p>
-        Je suis pas Satoshi.<br />
-        Je suis pas un fonds.<br />
-        Je suis un gars. Un laptop. Une Clio 2 diesel.
-      </p>
-    </section>
-
-    <section>
-      <h2>🧱 Pourquoi $PEREGRN ?</h2>
-      <p>
-        Parce que trop de projets sont faits pour lever. Ici on trace.  
-        Pas d’ICO, pas de promesse d’alpha. Juste une ligne droite vers l’inconnu.
-      </p>
-    </section>
-
-    <section>
-      <h2>🚫 Pas de VC. Pas de team.</h2>
-      <p>
-        $PEREGRN est une expérience. Une narration.  
-        Aucun founder doxxé. Aucun seed round. Une propulsion libre.
-      </p>
-    </section>
-
-    <section>
-      <a href="index.html" class="btn">⬅️ Retour au cockpit</a>
-    </section>
-  </main>
-
-  <footer>
-    <p>© $PEREGRN — Ce n’est pas un projet. C’est un impact.</p>
-  </footer>
+  <script>
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("cryo-loader");
+      if (loader) {
+        loader.style.transition = "opacity 0.5s ease";
+        loader.style.opacity = 0;
+        setTimeout(() => loader.style.display = "none", 500);
+      }
+    });
+  </script>
 </body>
 </html>
-
