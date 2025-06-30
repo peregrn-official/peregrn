@@ -5,32 +5,17 @@
   <title>$PEREGRN — Origine</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    header {
-      text-align: center;
-      margin-top: 60px;
-      margin-bottom: 30px;
-    }
-    header h1 {
-      font-size: 2.2rem;
-      color: #00ffc6;
-    }
-    header p {
-      font-size: 1rem;
-      color: #ccc;
-      margin-top: 10px;
-    }
-    section img {
-      display: block;
-      margin: 40px auto;
-    }
+    header, section, footer { text-align: center; }
+    .hero { display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; margin: 60px auto 30px; }
+    .hero img.logo { width: 80px; height: auto; border-radius: 8px; }
+    .hero-text h1 { font-size: 2.2rem; color: #00ffc6; margin: 0; }
+    .hero-text p { font-size: 1rem; color: #ccc; margin-top: 8px; }
+    section { max-width: 900px; margin: 0 auto; padding: 20px; }
   </style>
 </head>
 <body>
 
-  <div id="cryo-loader">
-    <div class="cryo-pulse"></div>
-    <p>Décompression cryogénique en cours...</p>
-  </div>
+  <div id="cryo-loader"><div class="cryo-pulse"></div><p>Décompression cryogénique en cours...</p></div>
 
   <nav>
     <ul>
@@ -39,29 +24,29 @@
       <li><a href="faq.html">FAQ</a></li>
       <li><a href="flightlog.html">Journal de vol</a></li>
       <li><a href="registre.html">Registre Cryo</a></li>
+      <li><a href="lore.html">Lore</a></li>
     </ul>
   </nav>
 
   <header>
-    <h1>$PEREGRN — Token tactique</h1>
-    <p>Juste un gars, une Clio, et une trajectoire sans survivant côté VC.</p>
+    <div class="hero">
+      <img src="assets/logo.png" alt="Logo PEREGRN" class="logo" />
+      <div class="hero-text">
+        <h1>$PEREGRN — Token tactique</h1>
+        <p>Juste un gars, une Clio, et une trajectoire sans survivant côté VC.</p>
+      </div>
+    </div>
   </header>
 
   <section>
-    <img src="assets/logo.png" alt="Logo PEREGRN" />
-    <p>🚀 Lancé sur pump.fun<br />
-       🔒 Aucune promesse, aucun bullshit<br />
-       🌐 Contrat Solana : <code>DK3h83B1nbfTuP4pnAiXeiSQp7mHnZAZVeKa1Xmtpump</code><br />
-       🧠 Founder Wallet : <code>9AnXyrdk8nYVDbTSGDYmNSbx3MdSSY6HSguHsiMcBoeq</code>
-    </p>
-    <p>Suivre la trajectoire :
-      <a href="https://x.com/satoshi_earn" target="_blank">@satoshi_earn</a>
-    </p>
+    <p>🚀 Lancé sur pump.fun<br>
+    🔒 Aucune promesse, aucun bullshit<br>
+    🌐 Contrat Solana : <code>DK3h83B1nbfTuP4pnAiXeiSQp7mHnZAZVeKa1Xmtpump</code><br>
+    🧠 Founder Wallet : <code>9AnXyrdk8nYVDbTSGDYmNSbx3MdSSY6HSguHsiMcBoeq</code></p>
+    <p>Suivre la trajectoire : <a href="https://x.com/satoshi_earn" target="_blank">@satoshi_earn</a></p>
   </section>
 
-  <footer>
-    <p>&copy; 2025 PEREGRN — cryo-compilé sans roadmap</p>
-  </footer>
+  <footer><p>&copy; 2025 PEREGRN — cryo-compilé sans roadmap</p></footer>
 
   <script>
     window.addEventListener("load", () => {
