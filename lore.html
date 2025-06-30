@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <title>LORE — PEREGRN</title>
   <link rel="stylesheet" href="style.css" />
+  <script>
+    document.addEventListener("keydown", function(e) {
+      window.vaultKeys = (window.vaultKeys || "") + e.key;
+      if (window.vaultKeys.toUpperCase().includes("VAULT1")) {
+        window.location.href = "vault.html";
+      }
+    });
+  </script>
   <style>
     .lore-terminal {
       font-family: monospace;
@@ -25,7 +33,10 @@
 </head>
 <body>
 
-  <div id="cryo-loader"><div class="cryo-pulse"></div><p>Décompression cryogénique en cours...</p></div>
+  <div id="cryo-loader">
+    <div class="cryo-pulse"></div>
+    <p>Décompression cryogénique en cours...</p>
+  </div>
 
   <nav>
     <ul>
@@ -35,6 +46,7 @@
       <li><a href="flightlog.html">Journal de vol</a></li>
       <li><a href="registre.html">Registre Cryo</a></li>
       <li><a href="lore.html" class="active">Lore</a></li>
+      <li><a href="ACCESS.html">ACCESS</a></li>
     </ul>
   </nav>
 
@@ -52,15 +64,20 @@ Chaque fragment est un silence. Chaque détenteur, un témoin.
     <span>> END OF TRANSMISSION _</span>
   </div>
 
+  <footer>
+    <p>&copy; 2025 PEREGRN — cryo-compilé sans roadmap</p>
+  </footer>
+
   <script>
     window.addEventListener("load", () => {
       const loader = document.getElementById("cryo-loader");
       if (loader) {
         loader.style.transition = "opacity 0.5s ease";
         loader.style.opacity = 0;
-        setTimeout(() => (loader.style.display = "none"), 500);
+        setTimeout(() => loader.style.display = "none", 500);
       }
     });
   </script>
+
 </body>
 </html>
