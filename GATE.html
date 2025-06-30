@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Accès PEREGRN — Terminal Cryo</title>
+  <title>GATE PX — Accès Cryo</title>
   <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
   <style>
     body {
@@ -10,7 +10,22 @@
       color: #00ffe1;
       font-family: monospace;
       text-align: center;
-      padding: 80px 20px;
+      padding: 60px 20px;
+    }
+    img.logo {
+      width: 100px;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 8px #00ffe1);
+    }
+    .scan {
+      margin-top: 30px;
+      font-size: 1.1em;
+      animation: scan 2s linear infinite;
+    }
+    @keyframes scan {
+      0% { opacity: 1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 1; }
     }
     button {
       background: #00ffe1;
@@ -19,32 +34,59 @@
       padding: 14px 30px;
       font-size: 1em;
       cursor: pointer;
-      margin-top: 30px;
+      margin-top: 20px;
     }
     .hidden { display: none; }
+    .debug {
+      background: rgba(0, 255, 225, 0.07);
+      border: 1px solid #00ffe1;
+      padding: 20px;
+      margin-top: 40px;
+      text-align: left;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    a {
+      color: #00ffe1;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
 
-  <h1>🧊 Terminal Cryo PX</h1>
-  <p>Connexion requise : seul un Porteur de $PEREGRN peut franchir cette passerelle.</p>
+  <img src="assets/logo.png" alt="PX Logo" class="logo" />
+  <h1>Terminal PX — Verrouillage Cryo</h1>
+  <p>Connexion requise : seuls les porteurs de $PEREGRN peuvent passer.</p>
 
   <button id="connectBtn">🔗 Connecter Wallet</button>
+  <div class="scan hidden" id="scanText">🔍 Scan cryo en cours...</div>
 
-  <div id="status" style="margin-top: 40px;"></div>
+  <div id="status"></div>
+
   <div id="access" class="hidden">
-    <p>✅ Token détecté. Accès autorisé.</p>
-    <a href="index.html"><button>➡ Entrer dans le site</button></a>
+    <p>✅ Signature détectée.</p>
+    <a href="index.html"><button>➡ Accès autorisé</button></a>
   </div>
+
   <div id="denied" class="hidden">
-    <p>❌ Aucun $PEREGRN détecté sur ce wallet.</p>
-    <p>Ce portail ne s’ouvrira qu’aux véritables Porteurs.</p>
+    <p>❌ Aucun $PEREGRN détecté.</p>
+    <p>Portail PX verrouillé pour ce voyageur.</p>
   </div>
+
+  <div id="debug" class="debug hidden"></div>
+
+  <footer style="margin-top: 80px; font-size: 0.8em;">
+    &copy; 2025 PEREGRN — Surveillance PX en direct
+  </footer>
 
   <script>
     const mint = "DK3h83B1nbfTuP4pnAiXeiSQp7mHnZAZVeKa1Xmtpump";
 
     document.getElementById("connectBtn").addEventListener("click", async () => {
+      const scanText = document.getElementById("scanText");
+      scanText.classList.remove("hidden");
+
       if (!window.solana || !window.solana.isPhantom) {
         alert("Phantom Wallet est requis !");
         return;
@@ -53,20 +95,24 @@
       try {
         const resp = await window.solana.connect();
         const wallet = resp.publicKey.toString();
-        document.getElementById("status").innerText = "🔍 Vérification du solde en cours...";
 
-        // Connexion à Solana mainnet
+        const debug = document.getElementById("debug");
+        debug.classList.remove("hidden");
+        debug.innerHTML = `<strong>DEBUG PX</strong><br>Wallet connecté : ${wallet}<br><br>`;
+
         const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl("mainnet-beta"));
-
         const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
           new solanaWeb3.PublicKey(wallet),
           { programId: new solanaWeb3.PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA") }
         );
 
+        debug.innerHTML += `Jetons scannés : ${tokenAccounts.value.length}<br>Recherche du mint : ${mint}<br>`;
+
         let found = false;
         tokenAccounts.value.forEach((account) => {
           const info = account.account.data.parsed.info;
           if (info.mint === mint && parseFloat(info.tokenAmount.uiAmount) > 0) {
+            debug.innerHTML += `→ ${info.tokenAmount.uiAmount} $PEREGRN détectés ✅<br>`;
             found = true;
           }
         });
@@ -76,14 +122,16 @@
         } else {
           document.getElementById("denied").classList.remove("hidden");
         }
-        document.getElementById("status").innerText = "";
+
+        scanText.classList.add("hidden");
 
       } catch (e) {
         console.error(e);
-        alert("Erreur lors de la connexion au wallet.");
+        alert("Erreur lors de la connexion.");
       }
     });
   </script>
 
 </body>
 </html>
+
