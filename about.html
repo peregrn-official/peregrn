@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <title>À propos — PEREGRN</title>
   <link rel="stylesheet" href="style.css" />
+  <script>
+    document.addEventListener("keydown", function(e) {
+      window.vaultKeys = (window.vaultKeys || "") + e.key;
+      if (window.vaultKeys.toUpperCase().includes("VAULT1")) {
+        window.location.href = "vault.html";
+      }
+    });
+  </script>
 </head>
 <body>
 
@@ -17,6 +25,7 @@
       <li><a href="flightlog.html">Journal de vol</a></li>
       <li><a href="registre.html">Registre Cryo</a></li>
       <li><a href="lore.html">Lore</a></li>
+      <li><a href="ACCESS.html">ACCESS</a></li>
     </ul>
   </nav>
 
@@ -28,6 +37,10 @@
     <p>Seulement des fragments cryogéniques, des mémoires compressées, et une écriture sur bitume brut.</p>
     <p>Tu peux lire. Tu peux mentir. Mais une fois vu, tu ne pourras plus dés-voir.</p>
   </section>
+
+  <footer>
+    <p>&copy; 2025 PEREGRN — cryo-compilé sans roadmap</p>
+  </footer>
 
   <script>
     window.addEventListener("load", () => {
