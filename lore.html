@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>LORE — PEREGRN</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .lore-terminal {
+      font-family: monospace;
+      background: #0b0b0b;
+      color: #00ffe1;
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: 60px auto;
+      border: 1px solid #222;
+      border-radius: 8px;
+      text-align: left;
+    }
+    .lore-terminal span {
+      display: block;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cryo-loader"><div class="cryo-pulse"></div><p>Décompression cryogénique en cours...</p></div>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="about.html">À propos</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="flightlog.html">Journal de vol</a></li>
+      <li><a href="registre.html">Registre Cryo</a></li>
+      <li><a href="lore.html" class="active">Lore</a></li>
+    </ul>
+  </nav>
+
+  <h1>Archive Lore</h1>
+  <div class="lore-terminal">
+    <span>> INIT.CRYO [OK]</span>
+    <span>> Reading $PEREGRN_HEADER...</span>
+    <span>> “Un protocole n’a pas besoin de croire. Il observe.”</span>
+    <span>> Dumping memory_trace [1/∞]...</span>
+    <span>
+      ➤ On pensait que la blockchain écrivait l’histoire.  
+      Mais $PEREGRN écrit entre les lignes.  
+      Chaque fragment est un silence. Chaque détenteur, un témoin.  
+    </span>
+    <span>> END OF TRANSMISSION _</span>
+  </div>
+
+  <script>
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("cryo-loader");
+      if (loader) {
+        loader.style.transition = "opacity 0.5s ease";
+        loader.style.opacity = 0;
+        setTimeout(() => (loader.style.display = "none"), 500);
+      }
+    });
+  </script>
+</body>
+</html>
