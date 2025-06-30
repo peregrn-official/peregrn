@@ -1,9 +1,17 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <title>Registre Cryo — PEREGRN</title>
   <link rel="stylesheet" href="style.css" />
+  <script>
+    document.addEventListener("keydown", function(e) {
+      window.vaultKeys = (window.vaultKeys || "") + e.key;
+      if (window.vaultKeys.toUpperCase().includes("VAULT1")) {
+        window.location.href = "vault.html";
+      }
+    });
+  </script>
 </head>
 <body>
 
@@ -17,23 +25,28 @@
       <li><a href="flightlog.html">Journal de vol</a></li>
       <li><a href="registre.html" class="active">Registre Cryo</a></li>
       <li><a href="lore.html">Lore</a></li>
+      <li><a href="ACCESS.html">ACCESS</a></li>
     </ul>
   </nav>
 
   <h1>Registre Cryo</h1>
   <section>
-    <p>PX-000 | Détenteur initial</p>
-    <p>PX-001 | Signal détecté</p>
-    <p>PX-002 | Fracture confirmée</p>
-    <p>PX-003 | Propagation stable</p>
-    <p>PX-004 | Reçu à Tokyo</p>
-    <p>PX-005 | FONDATEUR</p>
-    <p>PX-006 | ACCESS</p>
-    <p>PX-007 | Fragment miroir</p>
-    <p>PX-008 | Cryo-mutation</p>
-    <p>PX-009 | Lien occulte</p>
-    <p>PX-010 | Obsolescence zéro</p>
+    <div class="fragment"><img src="assets/PX-000.png" alt="PX-000" /><p>PX-000 | Détenteur initial</p></div>
+    <div class="fragment"><img src="assets/PX-001.png" alt="PX-001" /><p>PX-001 | Signal détecté</p></div>
+    <div class="fragment"><img src="assets/PX-002.png" alt="PX-002" /><p>PX-002 | Fracture confirmée</p></div>
+    <div class="fragment"><img src="assets/PX-003.png" alt="PX-003" /><p>PX-003 | Propagation stable</p></div>
+    <div class="fragment"><img src="assets/PX-004.png" alt="PX-004" /><p>PX-004 | Reçu à Tokyo</p></div>
+    <div class="fragment"><img src="assets/PX-005.png" alt="PX-005" /><p>PX-005 | FONDATEUR</p></div>
+    <div class="fragment"><img src="assets/PX-006.png" alt="PX-006" /><p>PX-006 | ACCESS</p></div>
+    <div class="fragment"><img src="assets/PX-007.png" alt="PX-007" /><p>PX-007 | Fragment miroir</p></div>
+    <div class="fragment"><img src="assets/PX-008.png" alt="PX-008" /><p>PX-008 | Cryo-mutation</p></div>
+    <div class="fragment"><img src="assets/PX-009.png" alt="PX-009" /><p>PX-009 | Lien occulte</p></div>
+    <div class="fragment"><img src="assets/PX-010.png" alt="PX-010" /><p>PX-010 | Obsolescence zéro</p></div>
   </section>
+
+  <footer>
+    <p>&copy; 2025 PEREGRN — cryo-compilé sans roadmap</p>
+  </footer>
 
   <script>
     window.addEventListener("load", () => {
@@ -41,7 +54,7 @@
       if (loader) {
         loader.style.transition = "opacity 0.5s ease";
         loader.style.opacity = 0;
-        setTimeout(() => (loader.style.display = "none"), 500);
+        setTimeout(() => loader.style.display = "none", 500);
       }
     });
   </script>
