@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
+<head>  
+  <meta charset="UTF-8" />
+  <title>ACCESS — PEREGRN</title>
+  <link rel="stylesheet" href="style.css" />
   <script>
   const allowedReferrer = "https://peregrn-official.github.io/peregrn/";
   if (!document.referrer.startsWith(allowedReferrer)) {
@@ -8,9 +11,6 @@
     window.location.href = "index.html";
   }
 </script>
-  <meta charset="UTF-8" />
-  <title>ACCESS — PEREGRN</title>
-  <link rel="stylesheet" href="style.css" />
   <script>
     document.addEventListener("keydown", function(e) {
       window.vaultKeys = (window.vaultKeys || "") + e.key;
@@ -56,7 +56,8 @@
   <footer>
     <p>&copy; 2025 PEREGRN — cryo-compilé sans roadmap</p>
   </footer>
-
+<script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+<script src="secureCheck.js"></script>
   <script>
     function checkCode(e) {
       if (e.key === "Enter") {
@@ -79,7 +80,5 @@
       }
     });
   </script>
-<script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
-<script src="secureCheck.js"></script>
 </body>
 </html>
