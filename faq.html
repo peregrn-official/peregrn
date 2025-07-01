@@ -4,6 +4,17 @@
   <meta charset="UTF-8" />
   <title>FAQ — PEREGRN</title>
   <link rel="stylesheet" href="style.css" />
+
+  <!-- 🔒 Sécurité accès direct -->
+  <script>
+    const allowedReferrer = "https://peregrn-official.github.io/peregrn/";
+    if (!document.referrer.startsWith(allowedReferrer)) {
+      alert("⛔ Accès direct non autorisé. Redirection vers le terminal PX.");
+      window.location.href = "index.html";
+    }
+  </script>
+
+  <!-- 🧠 Trigger clavier VAULT1 -->
   <script>
     document.addEventListener("keydown", function(e) {
       window.vaultKeys = (window.vaultKeys || "") + e.key;
@@ -48,6 +59,11 @@
     <p>&copy; 2025 PEREGRN — cryo-compilé sans roadmap</p>
   </footer>
 
+  <!-- 🔐 Sécurité Web3 + solde PX -->
+  <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+  <script src="secureCheck.js"></script>
+
+  <!-- ⏳ Loader -->
   <script>
     window.addEventListener("load", () => {
       const loader = document.getElementById("cryo-loader");
@@ -58,6 +74,5 @@
       }
     });
   </script>
-
 </body>
 </html>
