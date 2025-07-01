@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" translate="no">
 <head>
   <meta charset="UTF-8" />
   <title>Claim NFT PX</title>
+  <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="style.css" />
 
   <!-- 🔒 Sécurité anti-accès direct -->
@@ -54,17 +55,17 @@
   </div>
 
   <h1>🎁 NFT PX — Réclamation Cryo</h1>
-  <p>Uniquement accessible aux porteurs de rang : FALCON ARCANUM</p>
+  <p>Uniquement accessible aux porteurs de rang : <strong>FALCON ARCANUM</strong></p>
 
   <button id="connectBtn">🔗 Connecter Wallet</button>
   <div id="status" style="margin-top: 40px;"></div>
 
   <div id="mintZone" class="hidden">
     <p>✅ Rang confirmé : prêt à minter votre NFT PX.</p>
-    <button onclick="alert('Mint en cours... (fonction à implémenter)')">✨ Mint mon NFT PX</button>
+    <button onclick="alert('Mint en cours… (fonction à cryo-déployer)')">✨ Mint mon NFT PX</button>
   </div>
 
-  <!-- 🔐 Vérification du wallet via secureCheck -->
+  <!-- 🔐 Liaison secure PX -->
   <script src="secureCheck.js"></script>
 
   <script>
@@ -79,22 +80,18 @@
         const wallet = resp.publicKey.toString();
         document.getElementById("status").innerText = `Wallet connecté : ${wallet}`;
         document.getElementById("mintZone").classList.remove("hidden");
-
-        // TODO : vérification on-chain + mint
-
       } catch (e) {
         console.error(e);
         alert("Erreur lors de la connexion au wallet.");
       }
     });
 
-    // 🧊 Loader cryo
     window.addEventListener("load", () => {
       const loader = document.getElementById("cryo-loader");
       if (loader) {
         loader.style.transition = "opacity 0.5s ease";
         loader.style.opacity = 0;
-        setTimeout(() => loader.style.display = "none", 500);
+        setTimeout(() => (loader.style.display = "none"), 500);
       }
     });
   </script>
