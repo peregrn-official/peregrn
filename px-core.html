@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" translate="no">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>PX-CORE | PEREGRN</title>
+  <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="style.css" />
+
+  <!-- 🔒 Sécurité referrer -->
+  <script>
+    const allowedReferrer = "https://peregrn-official.github.io/peregrn/";
+    if (!document.referrer.startsWith(allowedReferrer)) {
+      alert("⛔ Accès direct non autorisé. Redirection vers le terminal PX.");
+      window.location.href = "index.html";
+    }
+  </script>
+
+  <!-- 🧠 Déclencheur VAULT1 -->
+  <script>
+    document.addEventListener("keydown", function(e) {
+      window.vaultKeys = (window.vaultKeys || "") + e.key;
+      if (window.vaultKeys.toUpperCase().includes("VAULT1")) {
+        window.location.href = "px-xtr-17.html";
+      }
+    });
+  </script>
+
   <style>
     body {
       background-color: #000;
@@ -16,13 +37,14 @@
     }
     #console {
       max-width: 800px;
-      margin: 0 auto;
+      margin: 60px auto;
       padding: 20px;
       border: 1px solid #00ffe1;
       border-radius: 8px;
       background: rgba(0, 0, 0, 0.3);
       box-shadow: 0 0 10px #00ffe1;
       display: none;
+      text-align: left;
     }
     #cursor {
       display: inline-block;
@@ -58,8 +80,10 @@
 
     window.addEventListener("keydown", e => {
       if (unlocked) {
-        buffer += e.key;
-        userInput.textContent = buffer;
+        if (e.key.length === 1) {
+          buffer += e.key;
+          userInput.textContent = buffer;
+        }
       } else {
         window.secret = (window.secret || "") + e.key.toUpperCase();
         if (window.secret.includes("CORESEED")) {
@@ -69,5 +93,6 @@
       }
     });
   </script>
+
 </body>
 </html>
