@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" translate="no">
 <head>
   <meta charset="UTF-8" />
   <title>PX-XTR-17 — PEREGRN</title>
+  <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="style.css" />
 
   <!-- 🔒 Sécurité anti-referrer -->
@@ -19,12 +20,14 @@
     document.addEventListener("keydown", function(e) {
       window.vaultKeys = (window.vaultKeys || "") + e.key;
       if (window.vaultKeys.toUpperCase().includes("VAULT1")) {
-        window.location.href = "px-xtr-17.html"; // Redondant mais maintenu
+        window.location.href = "px-xtr-17.html";
       }
       window.unlocked = (window.unlocked || "") + e.key;
       if (window.unlocked.toUpperCase().includes("EXE")) {
         document.getElementById("exe-container").style.display = "block";
       }
+      if (window.vaultKeys.length > 20) window.vaultKeys = window.vaultKeys.slice(-10);
+      if (window.unlocked.length > 20) window.unlocked = window.unlocked.slice(-10);
     });
   </script>
 
