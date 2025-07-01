@@ -42,6 +42,11 @@
 
   <button id="connectBtn">🔗 Connecter Wallet</button>
 
+  <p style="margin-top:20px; font-size:0.9em; color:#00ffe199;">
+    🧪 Ce terminal cryo vérifie uniquement votre solde <strong>$PEREGRN</strong>.<br>
+    <strong>Aucune transaction</strong> n’est initiée, <strong>aucune signature</strong> ne vous sera demandée.
+  </p>
+
   <div id="status" style="margin-top: 30px;"></div>
   <div id="access" class="hidden">
     <p id="rankLine"></p>
@@ -81,7 +86,7 @@
         const wallet = resp.publicKey.toString();
         debug.innerHTML += `🔗 Wallet connecté : ${wallet}<br><br>`;
 
-        const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl("mainnet-beta"));
+        const connection = new solanaWeb3.Connection("https://mainnet.helius-rpc.com/?api-key=d50bd88d-c6aa-4b1b-af8c-9d9bfba9ffe3");
         const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
           new solanaWeb3.PublicKey(wallet),
           { programId: new solanaWeb3.PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA") }
