@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>  
+<html lang="fr" translate="no">
+<head>
   <meta charset="UTF-8" />
   <title>ACCESS — PEREGRN</title>
+  <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="style.css" />
 
   <!-- 🔒 Bloc anti-accès direct -->
@@ -65,14 +66,20 @@
   <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
   <script src="secureCheck.js"></script>
 
-  <!-- 🎛️ Script d’accès local -->
+  <!-- 🎛️ Script ACCESS CODE local -->
   <script>
     function checkCode(e) {
       if (e.key === "Enter") {
         const input = document.getElementById("access-code").value.trim().toUpperCase();
         const output = document.getElementById("result");
+
         if (input === "PX-006") {
-          output.innerHTML = "> ACCÈS ACCORDÉ :<br>> Lecture du fragment atmosphérique…<br><br>➤ Altitude n’est pas une position. C’est une mémoire de trajectoire.<br>➤ Liaison cryo-ouverte. Decrypt.sh en cours.";
+          output.innerHTML = `
+            > ACCÈS ACCORDÉ :<br>
+            > Lecture du fragment atmosphérique…<br><br>
+            ➤ Altitude n’est pas une position. C’est une mémoire de trajectoire.<br>
+            ➤ Liaison cryo-ouverte. Decrypt.sh en cours.
+          `;
         } else {
           output.innerHTML = "> Fragment non reconnu. Try again or evacuate.";
         }
