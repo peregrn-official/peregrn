@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PX-XXX | Fragment PX</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-color: #000;
+      color: #00ffe1;
+      font-family: 'Courier New', monospace;
+      padding: 40px;
+      text-align: center;
+    }
+    .fragment-header {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+    }
+    .fragment-image {
+      margin: 30px auto;
+      max-width: 90%;
+      border: 1px solid #00ffe1;
+    }
+    .fragment-lore {
+      margin-top: 40px;
+      line-height: 1.6em;
+      opacity: 0.85;
+    }
+    .secret-zone {
+      display: none;
+      margin-top: 40px;
+      padding: 20px;
+      border: 1px dashed #00ffe1;
+      background: rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="fragment-header">
+    PX-XXX — <em>[Titre du Fragment]</em>
+  </div>
+
+  <img src="fragments/PX-XXX.png" alt="Visuel du Fragment PX-XXX" class="fragment-image" />
+
+  <div class="fragment-lore">
+    <p>“Insère ici une phrase cryogénique, ambiguë et mémétique.”</p>
+    <p>Chaque fragment est un refus. Ou une preuve. Personne ne sait.</p>
+  </div>
+
+  <div class="secret-zone" id="secretZone">
+    <p>🔓 Fragment secondaire débloqué.</p>
+    <p>Lien : <a href="PX-SECRET.html">PX-SECRET</a></p>
+  </div>
+
+  <script>
+    // Séquence clavier pour débloquer la zone secrète
+    let buffer = "";
+    const secretDiv = document.getElementById("secretZone");
+    document.addEventListener("keydown", (e) => {
+      buffer += e.key.toUpperCase();
+      if (buffer.includes("UNLOCKPX")) {
+        secretDiv.style.display = "block";
+      }
+      if (buffer.length > 20) buffer = buffer.slice(-10); // Limite le buffer
+    });
+  </script>
+
+</body>
+</html>
