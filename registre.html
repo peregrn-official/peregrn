@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <title>Registre Cryo — PEREGRN</title>
   <link rel="stylesheet" href="style.css" />
+  <script>
+    const allowedReferrer = "https://peregrn-official.github.io/peregrn/";
+    if (!document.referrer.startsWith(allowedReferrer)) {
+      alert("⛔ Accès direct non autorisé. Redirection vers le terminal PX.");
+      window.location.href = "index.html";
+    }
+  </script>
+  
   <style>
     .fragment {
       max-width: 320px;
@@ -191,8 +199,11 @@
   <footer>
     <p>&copy; 2025 PEREGRN — cryo-compilé sans roadmap</p>
   </footer>
-
-  <script>
+  
+<script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+  <script src="secureCheck.js"></script>
+  
+  <script>    
     document.addEventListener("DOMContentLoaded", () => {
       const loader = document.getElementById("cryo-loader");
       if (loader) {
