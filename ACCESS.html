@@ -5,98 +5,137 @@
   <title>ACCESS — PEREGRN</title>
   <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: radial-gradient(ellipse at center, #001015, #000);
+      color: #00ffe1;
+      font-family: 'Courier New', monospace;
+      overflow: hidden;
+      margin: 0;
+    }
+    .terminal-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: left;
+      padding: 20px;
+    }
+    .typewriter {
+      font-size: 1.1em;
+      white-space: pre-wrap;
+      line-height: 1.5em;
+      animation: flicker 1.5s infinite alternate;
+    }
+    @keyframes flicker {
+      from { opacity: 0.88; }
+      to   { opacity: 1; }
+    }
+    .access-input {
+      margin-top: 20px;
+    }
+    input {
+      background: #000;
+      border: 1px solid #00ffe1;
+      color: #00ffe1;
+      padding: 8px;
+      font-family: inherit;
+      font-size: 1em;
+      width: 220px;
+      text-align: center;
+    }
+    .code-response {
+      margin-top: 20px;
+      font-style: italic;
+    }
+    .cryo-glow {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle, #00ffe122, transparent 70%);
+      z-index: -1;
+      animation: pulseGlow 4s infinite;
+    }
+    @keyframes pulseGlow {
+      0%   { opacity: 0.2; }
+      50%  { opacity: 0.5; }
+      100% { opacity: 0.2; }
+    }
+  </style>
 
-  <!-- 🔒 Bloc anti-accès direct -->
+  <!-- 🛡️ Vérification accès -->
   <script>
     const allowedReferrer = "https://peregrn-official.github.io/peregrn/";
     if (!document.referrer.startsWith(allowedReferrer)) {
-      alert("⛔ Accès direct non autorisé. Redirection vers le terminal PX.");
+      console.warn("⛔ Accès direct interdit. Redirection PX.");
       window.location.href = "index.html";
     }
   </script>
 
-  <!-- 🧠 Trigger secret : VAULT1 -->
+  <!-- 🧬 Séquence VAULT1 -->
   <script>
     document.addEventListener("keydown", function(e) {
       window.vaultKeys = (window.vaultKeys || "") + e.key;
       if (window.vaultKeys.toUpperCase().includes("VAULT1")) {
         window.location.href = "px-xtr-17.html";
       }
+      if (window.vaultKeys.length > 15) {
+        window.vaultKeys = window.vaultKeys.slice(-10);
+      }
     });
   </script>
 </head>
-
 <body>
-  <div id="cryo-loader">
-    <div class="cryo-pulse"></div>
-    <p>Décompression cryogénique en cours...</p>
-  </div>
+  <div class="cryo-glow"></div>
+  <div class="terminal-container">
+    <div class="typewriter" id="introText"></div>
 
-  <nav>
-    <ul>
-      <li><a href="index.html">Accueil</a></li>
-      <li><a href="about.html">À propos</a></li>
-      <li><a href="faq.html">FAQ</a></li>
-      <li><a href="flightlog.html">Journal de vol</a></li>
-      <li><a href="registre.html">Registre Cryo</a></li>
-      <li><a href="lore.html">Lore</a></li>
-      <li><a href="ACCESS.html" class="active">ACCESS</a></li>
-    </ul>
-  </nav>
-
-  <h1>Terminal Cryo</h1>
-
-  <div class="terminal">
-    <p>> INIT.ACCESS [OK]</p>
-    <p>> Listening for fragment...</p>
-
-    <div class="input-line">
-      <label for="access-code">ACCESS CODE :</label><br />
-      <input type="text" id="access-code" placeholder="ex: PX-006" onkeypress="checkCode(event)" />
+    <div class="access-input">
+      <input type="text" id="access-code" placeholder="ENTRER CODE PX..." onkeypress="checkCode(event)" />
     </div>
-
-    <div id="result" class="unlocked"></div>
+    <div class="code-response" id="codeResponse"></div>
   </div>
 
-  <footer>
-    <p>&copy; 2025 PEREGRN — cryo-compilé sans roadmap</p>
-  </footer>
-
-  <!-- 🔐 Sécurité Web3 + Vérification PX -->
+  <!-- 🔐 Secure Check -->
   <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
   <script src="secureCheck.js"></script>
 
-  <!-- 🎛️ Script ACCESS CODE local -->
+  <!-- ⌨️ ACCESS CODE -->
   <script>
     function checkCode(e) {
       if (e.key === "Enter") {
         const input = document.getElementById("access-code").value.trim().toUpperCase();
-        const output = document.getElementById("result");
-
+        const output = document.getElementById("codeResponse");
         if (input === "PX-006") {
-          output.innerHTML = `
-            > ACCÈS ACCORDÉ :<br>
-            > Lecture du fragment atmosphérique…<br><br>
-            ➤ Altitude n’est pas une position. C’est une mémoire de trajectoire.<br>
-            ➤ Liaison cryo-ouverte. Decrypt.sh en cours.
-          `;
+          output.innerHTML = "🛰️ Liaison PX établie. Fragment atmosphérique déverrouillé.<br>➤ 'Altitude n’est pas une position. C’est une mémoire de trajectoire.'";
         } else {
-          output.innerHTML = "> Fragment non reconnu. Try again or evacuate.";
+          output.innerHTML = "🔒 Code inconnu. Reviens quand tu ressens le sas.";
         }
       }
     }
   </script>
 
-  <!-- ⏳ Disparition du loader -->
+  <!-- 🎛️ Texte typé -->
   <script>
-    window.addEventListener("load", () => {
-      const loader = document.getElementById("cryo-loader");
-      if (loader) {
-        loader.style.transition = "opacity 0.5s ease";
-        loader.style.opacity = 0;
-        setTimeout(() => loader.style.display = "none", 500);
+    const lines = [
+      "> [PX-TERMINAL] Initialisation…",
+      "> Connexion cryogénique établie",
+      "> Analyse du wallet…",
+      "> Attente du fragment.",
+      "",
+      "> Tu ne trouveras rien ici.",
+      "> À moins d’avoir déjà vu ce qui s’y cache."
+    ];
+    let i = 0;
+    function typeLine() {
+      if (i < lines.length) {
+        document.getElementById("introText").innerHTML += lines[i] + "\\n";
+        i++;
+        setTimeout(typeLine, 700);
       }
-    });
+    }
+    window.onload = typeLine;
   </script>
 </body>
 </html>
