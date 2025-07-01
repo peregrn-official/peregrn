@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" translate="no">
 <head>
   <meta charset="UTF-8">
   <title>LORE — PEREGRN</title>
+  <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="style.css" />
 
   <!-- 🔒 Sécurité accès direct -->
@@ -14,13 +15,19 @@
     }
   </script>
 
-  <!-- 🧠 Vault trigger -->
+  <!-- 🧠 Vault & Ghostrunner trigger -->
   <script>
+    let vaultKeys = "";
     document.addEventListener("keydown", function(e) {
-      window.vaultKeys = (window.vaultKeys || "") + e.key;
-      if (window.vaultKeys.toUpperCase().includes("VAULT1")) {
+      vaultKeys += e.key.toUpperCase();
+      if (vaultKeys.includes("VAULT1")) {
         window.location.href = "px-xtr-17.html";
       }
+      if (vaultKeys.includes("GHOSTRUN")) {
+        const zone = document.getElementById("ghostrunner");
+        if (zone) zone.classList.remove("hidden");
+      }
+      if (vaultKeys.length > 20) vaultKeys = vaultKeys.slice(-10);
     });
   </script>
 
@@ -41,8 +48,12 @@
       display: block;
       margin-bottom: 12px;
     }
+    #ghostrunner.hidden {
+      display: none;
+    }
   </style>
 </head>
+
 <body>
 
   <div id="cryo-loader">
@@ -76,13 +87,17 @@ Chaque fragment est un silence. Chaque détenteur, un témoin.
     <span>> END OF TRANSMISSION _</span>
   </div>
 
+  <!-- 🕹️ Zone jeu PX bonus -->
+  <div id="ghostrunner" class="hidden"></div>
+
   <footer>
     <p>&copy; 2025 PEREGRN — cryo-compilé sans roadmap</p>
   </footer>
 
-  <!-- 🔐 Sécurité PX -->
+  <!-- 🔐 Web3 PX Secure -->
   <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
   <script src="secureCheck.js"></script>
+  <script src="ghostrunner.js"></script>
 
   <!-- ⏳ Loader -->
   <script>
@@ -98,4 +113,3 @@ Chaque fragment est un silence. Chaque détenteur, un témoin.
 
 </body>
 </html>
- 
