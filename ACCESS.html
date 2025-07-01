@@ -64,11 +64,11 @@
     }
   </style>
 
-  <!-- 🛡️ Vérification accès -->
+  <!-- 🛡️ Vérification accès améliorée -->
   <script>
     const allowedReferrer = "https://peregrn-official.github.io/peregrn/";
-    if (!document.referrer.startsWith(allowedReferrer)) {
-      console.warn("⛔ Accès direct interdit. Redirection PX.");
+    if (document.referrer && !document.referrer.startsWith(allowedReferrer)) {
+      console.warn("⛔ Accès externe bloqué.");
       window.location.href = "index.html";
     }
   </script>
@@ -97,7 +97,7 @@
     <div class="code-response" id="codeResponse"></div>
   </div>
 
-  <!-- 🔐 Secure Check -->
+  <!-- 🔐 Secure Check (en option) -->
   <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
   <script src="secureCheck.js"></script>
 
