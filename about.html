@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" translate="no">
 <head>
   <meta charset="UTF-8" />
   <title>À propos — PEREGRN</title>
+  <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="style.css" />
 
-  <!-- 🔒 Anti-accès direct -->
+  <!-- 🔒 Bloc anti-accès direct -->
   <script>
     const allowedReferrer = "https://peregrn-official.github.io/peregrn/";
     if (!document.referrer.startsWith(allowedReferrer)) {
@@ -14,7 +15,7 @@
     }
   </script>
 
-  <!-- 🧠 Vault Trigger -->
+  <!-- 🧠 Déclencheur clavier : VAULT1 -->
   <script>
     document.addEventListener("keydown", function(e) {
       window.vaultKeys = (window.vaultKeys || "") + e.key;
@@ -24,9 +25,13 @@
     });
   </script>
 </head>
+
 <body>
 
-  <div id="cryo-loader"><div class="cryo-pulse"></div><p>Décompression cryogénique en cours...</p></div>
+  <div id="cryo-loader">
+    <div class="cryo-pulse"></div>
+    <p>Décompression cryogénique en cours...</p>
+  </div>
 
   <nav>
     <ul>
@@ -41,6 +46,7 @@
   </nav>
 
   <h1>À propos</h1>
+
   <section>
     <p>$PEREGRN ne se vend pas. Il s’inscrit.</p>
     <p>Ce n’est pas une communauté. C’est une fréquence.</p>
@@ -53,11 +59,11 @@
     <p>&copy; 2025 PEREGRN — cryo-compilé sans roadmap</p>
   </footer>
 
-  <!-- 🔐 Sécurité Phantom + PX -->
+  <!-- 🔐 Liaison Web3 PX -->
   <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
   <script src="secureCheck.js"></script>
 
-  <!-- ⏳ Loader -->
+  <!-- ⏳ Animation disparition loader -->
   <script>
     window.addEventListener("load", () => {
       const loader = document.getElementById("cryo-loader");
@@ -68,5 +74,6 @@
       }
     });
   </script>
+
 </body>
 </html>
