@@ -1,6 +1,7 @@
-// secureCheck.js – protection PX
+// secureCheck.js – protection PX renforcée
+
 const mintPX = "DK3h83B1nbfTuP4pnAiXeiSQp7mHnZAZVeKa1Xmtpump";
-const minPX = 2500; // ex : Petit Faucon requis
+const minPX = 2500; // Rang minimum requis : Petit Faucon
 
 (async () => {
   if (!window.solana || !window.solana.isPhantom) {
@@ -35,10 +36,27 @@ const minPX = 2500; // ex : Petit Faucon requis
     });
 
     if (amount < minPX) {
-      alert("⛔ Accès refusé. Solde insuffisant.");
+      alert(`⛔ Accès refusé. Tu as ${amount} PX, il en faut ${minPX}.`);
       window.location.href = "index.html";
+    } else {
+      // ✅ Affichage du rang sur la page
+      const infoZone = document.createElement("div");
+      infoZone.style.position = "fixed";
+      infoZone.style.bottom = "20px";
+      infoZone.style.right = "20px";
+      infoZone.style.background = "#000000cc";
+      infoZone.style.color = "#00ffe1";
+      infoZone.style.border = "1px solid #00ffe1";
+      infoZone.style.padding = "10px 14px";
+      infoZone.style.fontFamily = "monospace";
+      infoZone.style.fontSize = "0.9em";
+      infoZone.style.zIndex = "9999";
+      infoZone.innerHTML = `🛰️ <strong>PX ID confirmé</strong><br>${wallet.slice(0, 4)}...${wallet.slice(-4)}<br>💠 Solde : ${amount} PX`;
+      document.body.appendChild(infoZone);
     }
+
   } catch (e) {
+    console.error(e);
     alert("🛑 Erreur de vérification PX.");
     window.location.href = "index.html";
   }
