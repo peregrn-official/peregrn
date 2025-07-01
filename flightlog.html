@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" translate="no">
 <head>
   <meta charset="UTF-8" />
   <title>Journal de vol — PEREGRN</title>
+  <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="style.css" />
 
   <!-- 🔒 Bloc anti-accès direct -->
@@ -14,7 +15,7 @@
     }
   </script>
 
-  <!-- 🧠 VAULT1 clavier -->
+  <!-- 🧠 Déclencheur clavier : VAULT1 -->
   <script>
     document.addEventListener("keydown", function(e) {
       window.vaultKeys = (window.vaultKeys || "") + e.key;
@@ -24,6 +25,7 @@
     });
   </script>
 </head>
+
 <body>
 
   <div id="cryo-loader">
@@ -54,11 +56,11 @@
     <p>&copy; 2025 PEREGRN — cryo-compilé sans roadmap</p>
   </footer>
 
-  <!-- 🔐 Sécurité Web3 + vérification solde -->
+  <!-- 🔐 Web3 PX Verification -->
   <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
   <script src="secureCheck.js"></script>
 
-  <!-- ⏳ Fade-out loader -->
+  <!-- ⏳ Disparition du loader -->
   <script>
     window.addEventListener("load", () => {
       const loader = document.getElementById("cryo-loader");
