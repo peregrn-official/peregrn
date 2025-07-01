@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PX-CORE | PEREGRN</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-color: #000;
+      color: #00ffe1;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      margin: 0;
+      padding: 60px 20px;
+    }
+    #console {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #00ffe1;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 10px #00ffe1;
+      display: none;
+    }
+    #cursor {
+      display: inline-block;
+      width: 10px;
+      background: #00ffe1;
+      margin-left: 5px;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>PX-CORE</h1>
+  <p>Le noyau n’existe qu’au moment où tu le regardes.</p>
+  <p>Essaie d’écrire, même si rien ne répond.</p>
+
+  <div id="console">
+    <p>> Fragment détecté...</p>
+    <p>> Cryo-trace en lecture seule...</p>
+    <p>> Noyau verrouillé jusqu’à nouvel input.</p>
+    <div><span id="userInput"></span><span id="cursor"></span></div>
+  </div>
+
+  <script>
+    const consoleDiv = document.getElementById("console");
+    const userInput = document.getElementById("userInput");
+    let buffer = "";
+    let unlocked = false;
+
+    window.addEventListener("keydown", e => {
+      if (unlocked) {
+        buffer += e.key;
+        userInput.textContent = buffer;
+      } else {
+        window.secret = (window.secret || "") + e.key.toUpperCase();
+        if (window.secret.includes("CORESEED")) {
+          consoleDiv.style.display = "block";
+          unlocked = true;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
