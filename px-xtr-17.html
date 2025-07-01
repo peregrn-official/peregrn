@@ -5,6 +5,29 @@
   <title>PX-XTR-17 — PEREGRN</title>
   <link rel="stylesheet" href="style.css" />
 
+  <!-- 🔒 Sécurité anti-referrer -->
+  <script>
+    const allowedReferrer = "https://peregrn-official.github.io/peregrn/";
+    if (!document.referrer.startsWith(allowedReferrer)) {
+      alert("⛔ Accès direct non autorisé. Redirection vers le terminal PX.");
+      window.location.href = "index.html";
+    }
+  </script>
+
+  <!-- 🧠 Vault + EXE Trigger -->
+  <script>
+    document.addEventListener("keydown", function(e) {
+      window.vaultKeys = (window.vaultKeys || "") + e.key;
+      if (window.vaultKeys.toUpperCase().includes("VAULT1")) {
+        window.location.href = "px-xtr-17.html"; // Redondant mais maintenu
+      }
+      window.unlocked = (window.unlocked || "") + e.key;
+      if (window.unlocked.toUpperCase().includes("EXE")) {
+        document.getElementById("exe-container").style.display = "block";
+      }
+    });
+  </script>
+
   <style>
     body {
       background-color: #000;
@@ -49,8 +72,8 @@
       color: #00ffe1;
     }
   </style>
-
 </head>
+
 <body>
 
   <div class="typewriter" id="terminal-output"></div>
@@ -62,7 +85,7 @@
   <div class="exe-mode" id="exe-container">
     <h2>PX-XTR.EXE : Accès Avancé</h2>
     <p>Vous avez exécuté un chemin que peu trouveront.<br>Le Fragment spectral vous observe désormais.</p>
-    <p><a href="https://peregrn-official.github.io/peregrn/PX-VARIANT-EX.html">→ Accéder au Fragment EX</a></p>
+    <p><a href="PX-VARIANT-EX.html">→ Accéder au Fragment EX</a></p>
   </div>
 
   <p style="margin-top: 40px;"><a href="index.html">↩ Retour à l’origine</a></p>
@@ -71,6 +94,11 @@
     &copy; 2025 PEREGRN — Fragment XTR déverrouillé
   </footer>
 
+  <!-- 🔐 Sécurité Phantom + solde -->
+  <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+  <script src="secureCheck.js"></script>
+
+  <!-- ⌨️ Typewriter -->
   <script>
     const text = `SYNCHRONISATION CRYO... OK
 > Fragment PX-XTR-17 détecté
@@ -90,14 +118,6 @@
       }
     }
     typeWriter();
-
-    // Bonus unlock: EXE
-    document.addEventListener("keydown", function(e) {
-      window.unlocked = (window.unlocked || "") + e.key;
-      if (window.unlocked.toUpperCase().includes("EXE")) {
-        document.getElementById("exe-container").style.display = "block";
-      }
-    });
   </script>
 
 </body>
