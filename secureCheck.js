@@ -1,11 +1,11 @@
-// secureCheck.js – protection PX renforcée
+ // secureCheck.js — version silencieuse (anti-popup)
 
 const mintPX = "DK3h83B1nbfTuP4pnAiXeiSQp7mHnZAZVeKa1Xmtpump";
 const minPX = 2500; // Rang minimum requis : Petit Faucon
 
 (async () => {
   if (!window.solana || !window.solana.isPhantom) {
-    alert("🛑 Phantom requis. Redirection PX.");
+    console.warn("🛑 Phantom requis. Redirection PX.");
     window.location.href = "index.html";
     return;
   }
@@ -36,7 +36,7 @@ const minPX = 2500; // Rang minimum requis : Petit Faucon
     });
 
     if (amount < minPX) {
-      alert(`⛔ Accès refusé. Tu as ${amount} PX, il en faut ${minPX}.`);
+      console.warn(`⛔ Accès refusé. PX trouvés : ${amount} < ${minPX}`);
       window.location.href = "index.html";
     } else {
       // ✅ Affichage du rang sur la page
@@ -56,8 +56,7 @@ const minPX = 2500; // Rang minimum requis : Petit Faucon
     }
 
   } catch (e) {
-    console.error(e);
-    alert("🛑 Erreur de vérification PX.");
+    console.error("🛑 Erreur de vérification PX :", e);
     window.location.href = "index.html";
   }
 })();
