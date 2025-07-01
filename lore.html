@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>LORE — PEREGRN</title>
   <link rel="stylesheet" href="style.css" />
+
+  <!-- 🔒 Sécurité accès direct -->
+  <script>
+    const allowedReferrer = "https://peregrn-official.github.io/peregrn/";
+    if (!document.referrer.startsWith(allowedReferrer)) {
+      alert("⛔ Accès direct non autorisé. Redirection vers le terminal PX.");
+      window.location.href = "index.html";
+    }
+  </script>
+
+  <!-- 🧠 Vault trigger -->
   <script>
     document.addEventListener("keydown", function(e) {
       window.vaultKeys = (window.vaultKeys || "") + e.key;
@@ -12,6 +23,7 @@
       }
     });
   </script>
+
   <style>
     .lore-terminal {
       font-family: monospace;
@@ -68,6 +80,11 @@ Chaque fragment est un silence. Chaque détenteur, un témoin.
     <p>&copy; 2025 PEREGRN — cryo-compilé sans roadmap</p>
   </footer>
 
+  <!-- 🔐 Sécurité PX -->
+  <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+  <script src="secureCheck.js"></script>
+
+  <!-- ⏳ Loader -->
   <script>
     window.addEventListener("load", () => {
       const loader = document.getElementById("cryo-loader");
@@ -81,3 +98,4 @@ Chaque fragment est un silence. Chaque détenteur, un témoin.
 
 </body>
 </html>
+ 
