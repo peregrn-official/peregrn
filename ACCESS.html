@@ -4,13 +4,17 @@
   <meta charset="UTF-8" />
   <title>ACCESS — PEREGRN</title>
   <link rel="stylesheet" href="style.css" />
+
+  <!-- 🔒 Bloc anti-accès direct -->
   <script>
-  const allowedReferrer = "https://peregrn-official.github.io/peregrn/";
-  if (!document.referrer.startsWith(allowedReferrer)) {
-    alert("⛔ Accès direct non autorisé. Redirection vers le terminal PX.");
-    window.location.href = "index.html";
-  }
-</script>
+    const allowedReferrer = "https://peregrn-official.github.io/peregrn/";
+    if (!document.referrer.startsWith(allowedReferrer)) {
+      alert("⛔ Accès direct non autorisé. Redirection vers le terminal PX.");
+      window.location.href = "index.html";
+    }
+  </script>
+
+  <!-- 🧠 Trigger secret : VAULT1 -->
   <script>
     document.addEventListener("keydown", function(e) {
       window.vaultKeys = (window.vaultKeys || "") + e.key;
@@ -20,8 +24,8 @@
     });
   </script>
 </head>
-<body>
 
+<body>
   <div id="cryo-loader">
     <div class="cryo-pulse"></div>
     <p>Décompression cryogénique en cours...</p>
@@ -56,8 +60,12 @@
   <footer>
     <p>&copy; 2025 PEREGRN — cryo-compilé sans roadmap</p>
   </footer>
-<script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
-<script src="secureCheck.js"></script>
+
+  <!-- 🔐 Sécurité Web3 + Vérification PX -->
+  <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+  <script src="secureCheck.js"></script>
+
+  <!-- 🎛️ Script d’accès local -->
   <script>
     function checkCode(e) {
       if (e.key === "Enter") {
@@ -70,7 +78,10 @@
         }
       }
     }
+  </script>
 
+  <!-- ⏳ Disparition du loader -->
+  <script>
     window.addEventListener("load", () => {
       const loader = document.getElementById("cryo-loader");
       if (loader) {
