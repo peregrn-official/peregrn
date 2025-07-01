@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" translate="no">
 <head>
   <meta charset="UTF-8" />
   <title>PX-NFT | Fracture Manifestée</title>
+  <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="style.css" />
   <style>
     body {
@@ -66,17 +67,14 @@
   </div>
 
   <script>
-    // Débloque l'accès mint avec la séquence "UNMINT"
+    // Séquence clavier : UNMINT ➜ Affiche zone mint
     let pxKey = "";
-
     document.addEventListener("keydown", function(e) {
       pxKey += e.key.toUpperCase();
       if (pxKey.includes("UNMINT")) {
         document.getElementById("secretMint").style.display = "block";
       }
-      if (pxKey.length > 20) {
-        pxKey = pxKey.slice(-10);
-      }
+      if (pxKey.length > 20) pxKey = pxKey.slice(-10);
     });
   </script>
 
