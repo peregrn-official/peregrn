@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" translate="no">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PX-XXX | Fragment PX</title>
+  <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="style.css" />
   <style>
     body {
@@ -21,6 +22,7 @@
       margin: 30px auto;
       max-width: 90%;
       border: 1px solid #00ffe1;
+      box-shadow: 0 0 10px #00ffe199;
     }
     .fragment-lore {
       margin-top: 40px;
@@ -33,6 +35,9 @@
       padding: 20px;
       border: 1px dashed #00ffe1;
       background: rgba(0, 0, 0, 0.3);
+    }
+    a {
+      color: #00ffe1;
     }
   </style>
 </head>
@@ -63,7 +68,7 @@
       if (buffer.includes("UNLOCKPX")) {
         secretDiv.style.display = "block";
       }
-      if (buffer.length > 20) buffer = buffer.slice(-10); // Limite le buffer
+      if (buffer.length > 20) buffer = buffer.slice(-10);
     });
   </script>
 
