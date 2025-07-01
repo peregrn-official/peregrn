@@ -1,16 +1,21 @@
-// secureCheck.js — version silencieuse & fonctionnelle
+// secureCheck.js — version déclenchée par clic (anti-boucle)
 
 const mintPX = "DK3h83B1nbfTuP4pnAiXeiSQp7mHnZAZVeKa1Xmtpump";
-const minPX = 2500; // Rang minimum requis
+const minPX = 2500;
 
-(async () => {
-  if (!window.solana || !window.solana.isPhantom) {
-    console.warn("🛑 Phantom requis. Redirection PX.");
-    window.location.href = "index.html";
-    return;
-  }
+document.getElementById("connectBtn").addEventListener("click", async () => {
+  const status = document.getElementById("status");
+  const loader = document.getElementById("loader");
+  loader.classList.remove("hidden");
+  status.textContent = "";
 
   try {
+    if (!window.solana || !window.solana.isPhantom) {
+      status.textContent = "🛑 Phantom Wallet requis.";
+      loader.classList.add("hidden");
+      return;
+    }
+
     const resp = await window.solana.connect();
     const wallet = resp.publicKey.toString();
 
@@ -35,28 +40,20 @@ const minPX = 2500; // Rang minimum requis
       }
     });
 
-    if (amount < minPX) {
-      console.warn(`⛔ Accès refusé. ${amount} PX < ${minPX} requis.`);
-      window.location.href = "index.html";
+    loader.classList.add("hidden");
+
+    if (amount >= minPX) {
+      const successMsg = document.createElement("div");
+      successMsg.style = "position:fixed;bottom:20px;right:20px;background:#000000cc;border:1px solid #00ffe1;color:#00ffe1;padding:10px;font-family:monospace;font-size:0.9em;z-index:9999;";
+      successMsg.innerHTML = `🛰️ Accès confirmé<br>${wallet.slice(0, 4)}...${wallet.slice(-4)}<br>💠 ${amount} PX`;
+      document.body.appendChild(successMsg);
     } else {
-      // ✅ Affichage du rang PX
-      const infoZone = document.createElement("div");
-      infoZone.style.position = "fixed";
-      infoZone.style.bottom = "20px";
-      infoZone.style.right = "20px";
-      infoZone.style.background = "#000000cc";
-      infoZone.style.color = "#00ffe1";
-      infoZone.style.border = "1px solid #00ffe1";
-      infoZone.style.padding = "10px 14px";
-      infoZone.style.fontFamily = "monospace";
-      infoZone.style.fontSize = "0.9em";
-      infoZone.style.zIndex = "9999";
-      infoZone.innerHTML = `🛰️ <strong>PX Confirmé</strong><br>${wallet.slice(0, 4)}...${wallet.slice(-4)}<br>💠 Solde : ${amount} PX`;
-      document.body.appendChild(infoZone);
+      status.textContent = `⛔ Accès refusé. ${amount} PX trouvés, ${minPX} requis.`;
     }
 
   } catch (e) {
-    console.error("🛑 Erreur de vérification PX :", e);
-    window.location.href = "index.html";
+    loader.classList.add("hidden");
+    status.textContent = "❌ Erreur de vérification.";
+    console.error("🧊 Erreur secureCheck :", e);
   }
-})();
+});
