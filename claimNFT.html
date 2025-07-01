@@ -3,7 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <title>Claim NFT PX</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- 🔒 Sécurité anti-accès direct -->
+  <script>
+    const allowedReferrer = "https://peregrn-official.github.io/peregrn/";
+    if (!document.referrer.startsWith(allowedReferrer)) {
+      alert("⛔ Accès direct non autorisé. Redirection vers le terminal PX.");
+      window.location.href = "index.html";
+    }
+  </script>
+
+  <!-- 🧠 VaultKey clavier -->
+  <script>
+    document.addEventListener("keydown", function(e) {
+      window.vaultKeys = (window.vaultKeys || "") + e.key;
+      if (window.vaultKeys.toUpperCase().includes("VAULT1")) {
+        window.location.href = "px-xtr-17.html";
+      }
+    });
+  </script>
+
   <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+
   <style>
     body {
       background-color: #000;
@@ -26,15 +48,24 @@
 </head>
 <body>
 
+  <div id="cryo-loader">
+    <div class="cryo-pulse"></div>
+    <p>Déverrouillage cryogénique en cours...</p>
+  </div>
+
   <h1>🎁 NFT PX — Réclamation Cryo</h1>
   <p>Uniquement accessible aux porteurs de rang : FALCON ARCANUM</p>
 
   <button id="connectBtn">🔗 Connecter Wallet</button>
   <div id="status" style="margin-top: 40px;"></div>
+
   <div id="mintZone" class="hidden">
     <p>✅ Rang confirmé : prêt à minter votre NFT PX.</p>
     <button onclick="alert('Mint en cours... (fonction à implémenter)')">✨ Mint mon NFT PX</button>
   </div>
+
+  <!-- 🔐 Vérification du wallet via secureCheck -->
+  <script src="secureCheck.js"></script>
 
   <script>
     document.getElementById("connectBtn").addEventListener("click", async () => {
@@ -49,11 +80,21 @@
         document.getElementById("status").innerText = `Wallet connecté : ${wallet}`;
         document.getElementById("mintZone").classList.remove("hidden");
 
-        // TODO : intégrer vérification on-chain + fonction de mint ici
+        // TODO : vérification on-chain + mint
 
       } catch (e) {
         console.error(e);
         alert("Erreur lors de la connexion au wallet.");
+      }
+    });
+
+    // 🧊 Loader cryo
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("cryo-loader");
+      if (loader) {
+        loader.style.transition = "opacity 0.5s ease";
+        loader.style.opacity = 0;
+        setTimeout(() => loader.style.display = "none", 500);
       }
     });
   </script>
