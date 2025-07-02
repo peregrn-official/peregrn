@@ -1,82 +1,127 @@
 <!DOCTYPE html>
-<html lang="fr" translate="no">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <title>PX-NFT | Fracture Manifestée</title>
   <meta name="robots" content="noindex" />
-  <link rel="stylesheet" href="style.css" />
   <style>
     body {
-      background-color: #000;
+      background: radial-gradient(ellipse at center, #001015, #000);
       color: #00ffe1;
       font-family: 'Courier New', monospace;
-      text-align: center;
-      padding: 60px 20px;
+      overflow: hidden;
+      margin: 0;
+      height: 100vh;
     }
-    .px-header {
-      font-size: 1.6em;
-      margin-bottom: 40px;
+    .terminal {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 20px;
+      text-align: left;
     }
-    .mint-img {
-      width: 240px;
-      border: 2px solid #00ffe1;
-      border-radius: 4px;
-      margin: 20px auto;
+    .typewriter {
+      font-size: 1em;
+      white-space: pre-wrap;
+      line-height: 1.6em;
+      animation: flicker 1.5s infinite alternate;
     }
-    .mint-button {
+    @keyframes flicker {
+      from { opacity: 0.85; }
+      to   { opacity: 1; }
+    }
+    .glow-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, #00ffe122, transparent 70%);
+      z-index: -1;
+      animation: pulse 4s infinite;
+    }
+    @keyframes pulse {
+      0%   { opacity: 0.2; }
+      50%  { opacity: 0.5; }
+      100% { opacity: 0.2; }
+    }
+    #connectBtn {
       margin-top: 30px;
-      padding: 12px 24px;
       background: transparent;
-      border: 1px solid #00ffe1;
+      border: 2px solid #00ffe1;
       color: #00ffe1;
       font-size: 1em;
-      letter-spacing: 0.1em;
-      cursor: not-allowed;
-      opacity: 0.4;
+      padding: 10px 24px;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
-    .glitch {
-      font-style: italic;
-      opacity: 0.65;
+    #connectBtn:hover {
+      background: #00ffe122;
+      box-shadow: 0 0 12px #00ffe1;
+      transform: scale(1.05);
+    }
+    #status {
+      margin-top: 20px;
       font-size: 0.9em;
-      margin-top: 30px;
-      animation: glitch 6s infinite;
-    }
-    @keyframes glitch {
-      0%, 100% { transform: translateX(0); opacity: 0.5; }
-      50% { transform: translateX(-2px); opacity: 1; }
-    }
-    #secretMint {
-      display: none;
-      margin-top: 40px;
-      font-size: 1em;
+      opacity: 0.8;
     }
   </style>
+
+  <!-- 🔐 Referrer Protection -->
+  <script>
+    const allowedRef = "https://peregrn-official.github.io/peregrn/";
+    if (!document.referrer || !document.referrer.startsWith(allowedRef)) {
+      console.warn("⛔ Accès direct refusé.");
+      window.location.href = "404.html";
+    }
+  </script>
 </head>
 <body>
-
-  <div class="px-header">PX-NFT | Fracture Manifestée</div>
-
-  <img src="fragments/px-mintable.PNG" alt="Fragment PX NFT" class="mint-img" />
-
-  <button class="mint-button" disabled>MINT INITIATE ></button>
-
-  <div class="glitch">> Erreur : Fragment PX verrouillé — signature absente.</div>
-
-  <div id="secretMint">
-    <p>🔓 <strong>Mint débloqué :</strong> <a href="https://fractal.peregrn.io/" target="_blank">Accéder au forgeur PX</a></p>
+  <div class="glow-bg"></div>
+  <div class="terminal">
+    <div class="typewriter" id="terminalText"></div>
+    <button id="connectBtn">🔗 Connecter Wallet</button>
+    <div id="status"></div>
   </div>
 
+  <!-- Solana Web3 -->
+  <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
   <script>
-    // Séquence clavier : UNMINT ➜ Affiche zone mint
-    let pxKey = "";
-    document.addEventListener("keydown", function(e) {
-      pxKey += e.key.toUpperCase();
-      if (pxKey.includes("UNMINT")) {
-        document.getElementById("secretMint").style.display = "block";
+    const terminalLines = [
+      "> PX-NFT | Fracture Manifestée",
+      "> >",
+      "> Initialisation cryogénique…",
+      "> Détection du fragment en cours...",
+      "> Signature requise pour révéler le PX.",
+      ""
+    ];
+    let i = 0;
+    function typeTerminal() {
+      if (i < terminalLines.length) {
+        document.getElementById("terminalText").innerHTML += terminalLines[i] + "\\n";
+        i++;
+        setTimeout(typeTerminal, 650);
       }
-      if (pxKey.length > 20) pxKey = pxKey.slice(-10);
+    }
+    window.onload = typeTerminal;
+
+    document.getElementById("connectBtn").addEventListener("click", async () => {
+      const status = document.getElementById("status");
+      status.textContent = "⏳ Connexion au wallet...";
+      try {
+        if (!window.solana || !window.solana.isPhantom) {
+          status.textContent = "🛑 Phantom Wallet requis.";
+          return;
+        }
+        const resp = await window.solana.connect();
+        const wallet = resp.publicKey.toString();
+        status.innerHTML = `🛰️ Signature détectée<br>Wallet : ${wallet.slice(0, 4)}...${wallet.slice(-4)}<br>✅ Fragment PX révélé.`;
+      } catch (err) {
+        console.error(err);
+        status.textContent = "❌ Connexion annulée ou échouée.";
+      }
     });
   </script>
-
 </body>
 </html>
