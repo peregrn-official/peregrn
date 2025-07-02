@@ -4,101 +4,63 @@
   <meta charset="UTF-8" />
   <title>Claim NFT PX</title>
   <meta name="robots" content="noindex" />
-  <link rel="stylesheet" href="style.css" />
-
-  <!-- 🔒 Sécurité anti-accès direct -->
-  <script>
-    const allowedReferrer = "https://peregrn-official.github.io/peregrn/";
-    if (!document.referrer.startsWith(allowedReferrer)) {
-      alert("⛔ Accès direct non autorisé. Redirection vers le terminal PX.");
-      window.location.href = "index.html";
-    }
-  </script>
-
-  <!-- 🧠 VaultKey clavier -->
-  <script>
-    document.addEventListener("keydown", function(e) {
-      window.vaultKeys = (window.vaultKeys || "") + e.key;
-      if (window.vaultKeys.toUpperCase().includes("VAULT1")) {
-        window.location.href = "px-xtr-17.html";
-      }
-    });
-  </script>
-
   <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
-
+  <script src="https://unpkg.com/@metaplex-foundation/js"></script>
   <style>
-    body {
-      background-color: #000;
-      color: #00ffe1;
-      font-family: monospace;
-      text-align: center;
-      padding: 80px 20px;
-    }
-    button {
-      background: #00ffe1;
-      color: #000;
-      border: none;
-      padding: 14px 30px;
-      font-size: 1em;
-      cursor: pointer;
-      margin-top: 30px;
-    }
+    body { background-color: #000; color: #00ffe1; font-family: monospace; text-align: center; padding: 80px 20px; }
+    button { background: #00ffe1; color: #000; border: none; padding: 14px 30px; font-size: 1em; cursor: pointer; margin-top: 30px; }
     .hidden { display: none; }
   </style>
 </head>
-
 <body>
 
   <div id="cryo-loader">
-    <div class="cryo-pulse"></div>
     <p>Déverrouillage cryogénique en cours...</p>
   </div>
 
   <h1>🎁 NFT PX — Réclamation Cryo</h1>
-  <p>Uniquement accessible aux porteurs de rang : <strong>FALCON ARCANUM</strong></p>
+  <p>Rang requis : <strong>FALCON ARCANUM</strong></p>
 
   <button id="connectBtn">🔗 Connecter Wallet</button>
   <div id="status" style="margin-top: 40px; white-space: pre-line;"></div>
 
   <div id="mintZone" class="hidden">
     <p>✅ Rang confirmé : prêt à minter votre NFT PX.</p>
-    <button onclick="alert('⛏️ Mint PX simulé… (fonction cryogénique en attente de contrat)')">✨ Mint mon NFT PX</button>
+    <button id="mintBtn">✨ Mint mon NFT PX</button>
   </div>
 
-  <!-- 🔐 Liaison secure PX -->
-  <script src="secureCheck.js"></script>
+  <div id="nftDisplay" class="hidden" style="margin-top: 40px;">
+    <h2>🧬 NFT PX Minté</h2>
+    <img id="nftImage" src="" style="max-width: 300px; margin-top: 20px;" />
+    <p id="nftName" style="margin-top: 10px;"></p>
+    <p id="nftRarity" style="font-weight: bold;"></p>
+  </div>
 
   <script>
-    // Adresse du token SPL PX (test fictif sur Devnet)
-    const TOKEN_PX_ADDRESS = "7G2QbU3R9rkoZ6vVZq3vZz9ZxkZx9Zz9ZxkZx9Zz9Zxk";
+    const TOKEN_PX_ADDRESS = "7G2QbU3R9rkoZ6vVZq3vZz9ZxkZx9Zz9ZxkZx9Zz9Zxk"; // test token SPL
+    const CANDY_MACHINE_ID = "TON_CANDY_MACHINE_ID_ICI"; // à remplacer
 
     async function walletHasPXToken(walletAddress) {
       const connection = new solanaWeb3.Connection("https://api.devnet.solana.com");
       const accounts = await connection.getParsedTokenAccountsByOwner(
         new solanaWeb3.PublicKey(walletAddress),
-        {
-          programId: new solanaWeb3.PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA")
-        }
+        { programId: new solanaWeb3.PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA") }
       );
-
-      return accounts.value.some(account => {
-        const info = account.account.data.parsed.info;
-        return info.mint === TOKEN_PX_ADDRESS && parseInt(info.tokenAmount.amount) > 0;
-      });
+      return accounts.value.some(a => a.account.data.parsed.info.mint === TOKEN_PX_ADDRESS && parseInt(a.account.data.parsed.info.tokenAmount.amount) > 0);
     }
 
-    document.getElementById("connectBtn").addEventListener("click", async () => {
+    let wallet = null;
+    const connectBtn = document.getElementById("connectBtn");
+
+    connectBtn.addEventListener("click", async () => {
       if (!window.solana || !window.solana.isPhantom) {
         alert("Phantom Wallet est requis !");
         return;
       }
-
       try {
         const resp = await window.solana.connect();
-        const wallet = resp.publicKey.toString();
+        wallet = resp.publicKey.toString();
         document.getElementById("status").innerText = `Wallet connecté : ${wallet}`;
-
         const hasPX = await walletHasPXToken(wallet);
         if (hasPX) {
           document.getElementById("mintZone").classList.remove("hidden");
@@ -106,20 +68,41 @@
           document.getElementById("status").innerText += `\n⛔ Token PX non détecté — mint inaccessible.`;
         }
       } catch (e) {
-        console.error(e);
-        alert("Erreur lors de la connexion au wallet.");
+        alert("Erreur lors de la connexion Phantom.");
       }
     });
+
+    document.getElementById("mintBtn").addEventListener("click", async () => {
+      const connection = new solanaWeb3.Connection("https://api.devnet.solana.com");
+      const metaplex = window.metaplex = new metaplexJs.Metaplex(connection).use(metaplexJs.walletAdapterIdentity(window.solana));
+      try {
+        const { nft } = await metaplex.candyMachines().mint({ candyMachine: new solanaWeb3.PublicKey(CANDY_MACHINE_ID) });
+        document.getElementById("status").innerText += `\n✅ NFT minté avec succès !`;
+        await displayMintedNFT(nft.metadataAddress, connection);
+      } catch (e) {
+        console.error(e);
+        alert("Échec du mint.");
+      }
+    });
+
+    async function displayMintedNFT(metadataAddress, connection) {
+      const accInfo = await connection.getAccountInfo(metadataAddress);
+      if (!accInfo) return;
+      const buffer = accInfo.data;
+      const metadata = metaplexJs.Metadata.fromAccountInfo(accInfo)[0];
+      const uri = metadata.data.uri.replace(/\0/g, "");
+      const res = await fetch(uri);
+      const data = await res.json();
+      document.getElementById("nftImage").src = data.image;
+      document.getElementById("nftName").innerText = data.name;
+      const rarityAttr = data.attributes?.find(a => a.trait_type === "Rareté");
+      document.getElementById("nftRarity").innerText = rarityAttr ? `Rareté : ${rarityAttr.value}` : "";
+      document.getElementById("nftDisplay").classList.remove("hidden");
+    }
 
     window.addEventListener("load", () => {
-      const loader = document.getElementById("cryo-loader");
-      if (loader) {
-        loader.style.transition = "opacity 0.5s ease";
-        loader.style.opacity = 0;
-        setTimeout(() => (loader.style.display = "none"), 500);
-      }
+      document.getElementById("cryo-loader").style.display = "none";
     });
   </script>
-
 </body>
 </html>
