@@ -11,7 +11,6 @@
       font-family: 'Courier New', monospace;
       padding: 40px;
       margin: 0;
-      height: 100vh;
       overflow-y: auto;
     }
     h1 {
@@ -44,8 +43,8 @@
       animation: pulse 5s infinite;
     }
     @keyframes pulse {
-      0%   { opacity: 0.2; }
-      50%  { opacity: 0.6; }
+      0% { opacity: 0.2; }
+      50% { opacity: 0.6; }
       100% { opacity: 0.2; }
     }
     button {
@@ -66,49 +65,87 @@
 </head>
 <body>
   <div class="px-glow"></div>
-  <div class="terminal">
+  <div class="terminal" id="terminal">
     <h1>> PX-ADMIN // Terminal Root</h1>
-    > Accès cryogénique : ADMIN_OVERRIDE<br><br>
-
-    <a class="link" href="index.html?admin=on">🔁 index.html</a>
-    <a class="link" href="ACCESS.html?admin=on">🛰️ ACCESS.html</a>
-    <a class="link" href="PX-NFT.html?admin=on">🧬 PX-NFT.html</a>
-    <a class="link" href="px-xtr-17.html?admin=on">🧠 PX-XTR-17</a>
-    <a class="link" href="vault.html?admin=on">🔒 vault.html</a>
-    <a class="link" href="about.html?admin=on">📄 about.html</a>
-    <a class="link" href="archive.html?admin=on">🗃️ archive.html</a>
-    <a class="link" href="claimNFT.html?admin=on">🎖️ claimNFT.html</a>
-    <a class="link" href="faq.html?admin=on">❓ faq.html</a>
-    <a class="link" href="flightlog.html?admin=on">📡 flightlog.html</a>
-    <a class="link" href="lore.html?admin=on">📜 lore.html</a>
-    <a class="link" href="px-core.html?admin=on">🧩 px-core.html</a>
-    <a class="link" href="registreTEST.html?admin=on">🗂️ registreTEST.html</a>
-    <a class="link" href="templatePX.html?admin=on">🧱 templatePX.html</a>
-    <a class="link" href="404.html?admin=on">🚫 404.html</a>
-
-    <br><br>
-    <button id="connect">🔗 Connecter Wallet</button>
+    > Accès cryogénique : EN ATTENTE DE VÉRIFICATION<br><br>
+    <button id="connect">🔐 Connecter Wallet Admin</button>
     <div id="status"></div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
   <script>
-    document.getElementById("connect").addEventListener("click", async () => {
+    const ADMIN_ADDRESS = "HHop1jD6tJCaqAwymwWZGRGVdnhoWAic6b4JhTuJkyrU";
+    const MESSAGE = "PX-ADMIN :: Accès Cryo Falcon 2025";
+
+    async function verifyAdmin() {
       const status = document.getElementById("status");
-      status.textContent = "Connexion au wallet PX…";
+      if (!window.solana || !window.solana.isPhantom) {
+        status.textContent = "🛑 Phantom Wallet requis.";
+        return;
+      }
+
       try {
-        if (!window.solana || !window.solana.isPhantom) {
-          status.textContent = "🛑 Phantom Wallet requis.";
-          return;
-        }
-        const resp = await window.solana.connect();
+        const provider = window.solana;
+        const resp = await provider.connect();
         const wallet = resp.publicKey.toString();
-        status.innerHTML = `✅ Connecté : ${wallet.slice(0, 4)}…${wallet.slice(-4)}<br>🛰️ Accès PX actif.`;
+
+        const encodedMessage = new TextEncoder().encode(MESSAGE);
+        const signed = await provider.signMessage(encodedMessage, "utf8");
+        const signature = signed.signature;
+
+        const verified = nacl.sign.detached.verify(
+          encodedMessage,
+          new Uint8Array(signature),
+          new Uint8Array(resp.publicKey.toBytes ? resp.publicKey.toBytes() : bs58.decode(wallet))
+        );
+
+        if (verified && wallet === ADMIN_ADDRESS) {
+          status.innerHTML = `✅ Signature validée<br>Accès PX-ADMIN débloqué`;
+          showTerminalLinks();
+        } else {
+          document.getElementById("terminal").innerHTML =
+            "<h1 style='color:red;'>🚫 PX-ADMIN verrouillé</h1><br>Signature non reconnue.";
+        }
       } catch (e) {
         status.textContent = "❌ Connexion annulée.";
         console.error(e);
       }
-    });
+    }
+
+    function showTerminalLinks() {
+      const terminal = document.getElementById("terminal");
+      terminal.innerHTML = `
+        <h1>> PX-ADMIN // Terminal Root</h1>
+        > Accès cryogénique : ADMIN_VALIDÉ<br><br>
+        <a class="link" href="index.html?admin=on">🔁 index.html</a>
+        <a class="link" href="ACCESS.html?admin=on">🛰️ ACCESS.html</a>
+        <a class="link" href="PX-NFT.html?admin=on">🧬 PX-NFT.html</a>
+        <a class="link" href="px-xtr-17.html?admin=on">🧠 PX-XTR-17</a>
+        <a class="link" href="vault.html?admin=on">🔒 vault.html</a>
+        <a class="link" href="about.html?admin=on">📄 about.html</a>
+        <a class="link" href="archive.html?admin=on">🗃️ archive.html</a>
+        <a class="link" href="claimNFT.html?admin=on">🎖️ claimNFT.html</a>
+        <a class="link" href="faq.html?admin=on">❓ faq.html</a>
+        <a class="link" href="flightlog.html?admin=on">📡 flightlog.html</a>
+        <a class="link" href="lore.html?admin=on">📜 lore.html</a>
+        <a class="link" href="px-core.html?admin=on">🧩 px-core.html</a>
+        <a class="link" href="registreTEST.html?admin=on">🗂️ registreTEST.html</a>
+        <a class="link" href="templatePX.html?admin=on">🧱 templatePX.html</a>
+        <a class="link" href="404.html?admin=on">🚫 404.html</a>
+      `;
+    }
+
+    // Lib nacl pour vérification cryptographique
+    const script = document.createElement('script');
+    script.src = "https://cdn.jsdelivr.net/npm/tweetnacl-util/nacl-util.min.js";
+    script.onload = () => {
+      const script2 = document.createElement('script');
+      script2.src = "https://cdn.jsdelivr.net/npm/tweetnacl/nacl.min.js";
+      document.body.appendChild(script2);
+    };
+    document.head.appendChild(script);
+
+    document.getElementById("connect").addEventListener("click", verifyAdmin);
   </script>
 </body>
 </html>
