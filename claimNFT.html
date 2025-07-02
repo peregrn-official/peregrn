@@ -14,10 +14,6 @@
 </head>
 <body>
 
-  <div id="cryo-loader">
-    <p>Déverrouillage cryogénique en cours...</p>
-  </div>
-
   <h1>🎁 NFT PX — Réclamation Cryo</h1>
   <p>Rang requis : <strong>FALCON ARCANUM</strong></p>
 
@@ -37,8 +33,9 @@
   </div>
 
   <script>
-    const TOKEN_PX_ADDRESS = "7G2QbU3R9rkoZ6vVZq3vZz9ZxkZx9Zz9ZxkZx9Zz9Zxk"; // test token SPL
-    const CANDY_MACHINE_ID = "TON_CANDY_MACHINE_ID_ICI"; // à remplacer
+    const TOKEN_PX_ADDRESS = "7G2QbU3R9rkoZ6vVZq3vZz9ZxkZx9Zz9ZxkZx9Zz9Zxk"; // token SPL PX fictif
+    const CANDY_MACHINE_ID = "TON_CANDY_MACHINE_ID_ICI"; // à remplacer par ton Candy Machine Devnet
+    const isAdmin = window.location.search.includes("admin=on");
 
     async function walletHasPXToken(walletAddress) {
       const connection = new solanaWeb3.Connection("https://api.devnet.solana.com");
@@ -50,9 +47,8 @@
     }
 
     let wallet = null;
-    const connectBtn = document.getElementById("connectBtn");
 
-    connectBtn.addEventListener("click", async () => {
+    document.getElementById("connectBtn").addEventListener("click", async () => {
       if (!window.solana || !window.solana.isPhantom) {
         alert("Phantom Wallet est requis !");
         return;
@@ -61,6 +57,13 @@
         const resp = await window.solana.connect();
         wallet = resp.publicKey.toString();
         document.getElementById("status").innerText = `Wallet connecté : ${wallet}`;
+
+        if (isAdmin) {
+          document.getElementById("status").innerText += `\n⚠️ Mode ADMIN activé — vérification bypassée.`;
+          document.getElementById("mintZone").classList.remove("hidden");
+          return;
+        }
+
         const hasPX = await walletHasPXToken(wallet);
         if (hasPX) {
           document.getElementById("mintZone").classList.remove("hidden");
@@ -74,7 +77,7 @@
 
     document.getElementById("mintBtn").addEventListener("click", async () => {
       const connection = new solanaWeb3.Connection("https://api.devnet.solana.com");
-      const metaplex = window.metaplex = new metaplexJs.Metaplex(connection).use(metaplexJs.walletAdapterIdentity(window.solana));
+      const metaplex = new metaplexJs.Metaplex(connection).use(metaplexJs.walletAdapterIdentity(window.solana));
       try {
         const { nft } = await metaplex.candyMachines().mint({ candyMachine: new solanaWeb3.PublicKey(CANDY_MACHINE_ID) });
         document.getElementById("status").innerText += `\n✅ NFT minté avec succès !`;
@@ -99,10 +102,6 @@
       document.getElementById("nftRarity").innerText = rarityAttr ? `Rareté : ${rarityAttr.value}` : "";
       document.getElementById("nftDisplay").classList.remove("hidden");
     }
-
-    window.addEventListener("load", () => {
-      document.getElementById("cryo-loader").style.display = "none";
-    });
   </script>
 </body>
 </html>
