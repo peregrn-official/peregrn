@@ -47,6 +47,7 @@
     .hidden { display: none; }
   </style>
 </head>
+
 <body>
 
   <div id="cryo-loader">
@@ -58,17 +59,35 @@
   <p>Uniquement accessible aux porteurs de rang : <strong>FALCON ARCANUM</strong></p>
 
   <button id="connectBtn">🔗 Connecter Wallet</button>
-  <div id="status" style="margin-top: 40px;"></div>
+  <div id="status" style="margin-top: 40px; white-space: pre-line;"></div>
 
   <div id="mintZone" class="hidden">
     <p>✅ Rang confirmé : prêt à minter votre NFT PX.</p>
-    <button onclick="alert('Mint en cours… (fonction à cryo-déployer)')">✨ Mint mon NFT PX</button>
+    <button onclick="alert('⛏️ Mint PX simulé… (fonction cryogénique en attente de contrat)')">✨ Mint mon NFT PX</button>
   </div>
 
   <!-- 🔐 Liaison secure PX -->
   <script src="secureCheck.js"></script>
 
   <script>
+    // ✅ Jeton PX de test pour Devnet
+    const TOKEN_PX_ADDRESS = "7G2QbU3R9rkoZ6vVZq3vZz9ZxkZx9Zz9ZxkZx9Zz9Zxk";
+
+    async function walletHasPXToken(walletAddress) {
+      const connection = new solanaWeb3.Connection("https://api.devnet.solana.com");
+      const accounts = await connection.getParsedTokenAccountsByOwner(
+        new solanaWeb3.PublicKey(walletAddress),
+        {
+          programId: new solanaWeb3.PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA")
+        }
+      );
+
+      return accounts.value.some(account => {
+        const info = account.account.data.parsed.info;
+        return info.mint === TOKEN_PX_ADDRESS && parseInt(info.tokenAmount.amount) > 0;
+      });
+    }
+
     document.getElementById("connectBtn").addEventListener("click", async () => {
       if (!window.solana || !window.solana.isPhantom) {
         alert("Phantom Wallet est requis !");
@@ -79,7 +98,13 @@
         const resp = await window.solana.connect();
         const wallet = resp.publicKey.toString();
         document.getElementById("status").innerText = `Wallet connecté : ${wallet}`;
-        document.getElementById("mintZone").classList.remove("hidden");
+
+        const hasPX = await walletHasPXToken(wallet);
+        if (hasPX) {
+          document.getElementById("mintZone").classList.remove("hidden");
+        } else {
+          document.getElementById("status").innerText += `\n⛔ Token PX non détecté — mint inaccessible.`;
+        }
       } catch (e) {
         console.error(e);
         alert("Erreur lors de la connexion au wallet.");
