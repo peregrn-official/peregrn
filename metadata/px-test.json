@@ -2,7 +2,7 @@
   "name": "PX-TEST — Simulation cryogénique initiale",
   "symbol": "PX",
   "description": "Un fragment expérimental sur le réseau de test Devnet.",
-  "image": "https://arweave.net/TON_IMAGE_ID.png",
+  "image": "https://raw.githubusercontent.com/peregrn-official/peregrn/main/assets/PX-TEST.png",
   "attributes": [
     { "trait_type": "Origine", "value": "PX-CORE" },
     { "trait_type": "Séquence", "value": "TEST-00" }
@@ -10,13 +10,13 @@
   "properties": {
     "files": [
       {
-        "uri": "https://arweave.net/TON_IMAGE_ID.png",
+        "uri": "https://raw.githubusercontent.com/peregrn-official/peregrn/main/assets/PX-TEST.png",
         "type": "image/png"
       }
     ],
     "creators": [
       {
-        "address": "TON_ADRESSE_WALLET_PHANTOM",
+        "address": "HHop1jD6tJCaqAwymwWZGRGVdnhoWAic6b4JhTuJkyrU",
         "share": 100
       }
     ]
