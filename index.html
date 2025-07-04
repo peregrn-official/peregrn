@@ -3,96 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>PEREGRN — Sas PX | Expérience cryogénique visuelle</title>
-
-  <!-- SEO -->
   <meta name="robots" content="index, follow" />
   <meta name="description" content="Entrez dans le Sas PX, une expérience cryogénique immersive signée PEREGRN. Plongez dans une interface futuriste inspirée des terminaux numériques." />
-
-  <!-- Open Graph -->
   <meta property="og:title" content="PEREGRN — Sas PX" />
   <meta property="og:description" content="Expérience cryogénique immersive par PEREGRN." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://peregrn-official.github.io/peregrn/" />
-
-  <!-- STYLE -->
-  <style>
-    body {
-      background: radial-gradient(ellipse at center, #001015, #000);
-      color: #00ffe1;
-      font-family: 'Courier New', monospace;
-      overflow: hidden;
-      margin: 0;
-      height: 100vh;
-    }
-    .terminal-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      padding: 20px;
-      text-align: left;
-    }
-    .typewriter {
-      font-size: 1.1em;
-      white-space: pre-wrap;
-      line-height: 1.5em;
-      animation: flicker 1.5s infinite alternate;
-    }
-    @keyframes flicker {
-      from { opacity: 0.88; }
-      to   { opacity: 1; }
-    }
-    .cryo-glow {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: radial-gradient(circle, #00ffe122, transparent 70%);
-      z-index: -1;
-      animation: pulseGlow 4s infinite;
-    }
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 0.2; }
-      50% { opacity: 0.5; }
-    }
-    .enter-btn, .buy-px-btn {
-      margin-top: 20px;
-      background: transparent;
-      border: 2px solid #00ffe1;
-      color: #00ffe1;
-      font-size: 1em;
-      padding: 10px 24px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      font-family: inherit;
-    }
-    .enter-btn:hover, .buy-px-btn:hover {
-      background: #00ffe122;
-      box-shadow: 0 0 12px #00ffe1;
-      transform: scale(1.05);
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
   <div class="cryo-glow"></div>
 
   <main class="terminal-container">
     <div class="typewriter" id="introText"></div>
 
-    <!-- 🔸 BOUTON ACHAT TOKEN -->
+    <!-- 🔗 BOUTON ACHAT TOKEN -->
     <a href="https://pump.fun/coin/DK3h83B1nbfTuP4pnAiXeiSQp7mHnZAZVeKa1Xmtpump" target="_blank" class="buy-px-btn">
       💸 Obtenir $PEREGRN
     </a>
 
-    <!-- 🔓 ENTRÉE DANS LE SAS PX -->
-    <button class="enter-btn" onclick="window.location.href='ACCESS.html'">🔓 Entrer dans le sas PX</button>
+    <!-- 🔓 BOUTON ENTRÉE -->
+    <button class="enter-btn" onclick="window.location.href='ACCESS.html'">
+      🔓 Entrer dans le sas PX
+    </button>
   </main>
 
-  <!-- SCRIPT TYPEWRITER -->
   <script>
     const introLines = [
       "> [SAS PX] Initialisation cryogénique…",
