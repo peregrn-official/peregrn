@@ -1,151 +1,36 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>PX-ADMIN — Terminal Cryo</title>
-  <meta name="robots" content="noindex" />
-  <style>
-    body {
-      background: radial-gradient(circle at center, #001015, #000);
-      color: #00ffe1;
-      font-family: 'Courier New', monospace;
-      padding: 40px;
-      margin: 0;
-      overflow-y: auto;
-    }
-    h1 {
-      font-size: 1.6em;
-      margin-bottom: 10px;
-    }
-    .terminal {
-      border: 1px solid #00ffe144;
-      padding: 20px;
-      background: #00000088;
-      max-width: 600px;
-      line-height: 1.6em;
-    }
-    .link {
-      display: block;
-      margin: 6px 0;
-      color: #00ffe1;
-      text-decoration: none;
-    }
-    .link:hover {
-      text-decoration: underline;
-    }
-    .px-glow {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: radial-gradient(circle, #00ffe122, transparent 70%);
-      animation: pulse 5s infinite;
-    }
-    @keyframes pulse {
-      0% { opacity: 0.2; }
-      50% { opacity: 0.6; }
-      100% { opacity: 0.2; }
-    }
-    button {
-      margin-top: 20px;
-      background: transparent;
-      border: 1px solid #00ffe1;
-      color: #00ffe1;
-      padding: 8px 16px;
-      font-family: inherit;
-      cursor: pointer;
-    }
-    #status {
-      margin-top: 20px;
-      font-size: 0.9em;
-      opacity: 0.8;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <title>PX Console Admin</title>
+  <meta name="description" content="Interface cryo-administrative PX. Restreinte. Non documentée. Toujours surveillée." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="px-glow"></div>
-  <div class="terminal" id="terminal">
-    <h1>> PX-ADMIN // Terminal Root</h1>
-    > Accès cryogénique : EN ATTENTE DE VÉRIFICATION<br><br>
-    <button id="connect">🔐 Connecter Wallet Admin</button>
-    <div id="status"></div>
-  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
-  <script>
-    const ADMIN_ADDRESS = "HHop1jD6tJCaqAwymwWZGRGVdnhoWAic6b4JhTuJkyrU";
-    const MESSAGE = "PX-ADMIN :: Accès Cryo Falcon 2025";
+  <nav>
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="claimNFT.html">Mint</a></li>
+      <li><a href="registre.html">Fragments</a></li>
+    </ul>
+  </nav>
 
-    async function verifyAdmin() {
-      const status = document.getElementById("status");
-      if (!window.solana || !window.solana.isPhantom) {
-        status.textContent = "🛑 Phantom Wallet requis.";
-        return;
-      }
+  <section class="vault">
+    <h2>PX Vault Terminal</h2>
+    <p>Bienvenue, opérateur PX. Cette interface donne accès aux paramètres cryogéniques restreints.</p>
 
-      try {
-        const provider = window.solana;
-        const resp = await provider.connect();
-        const wallet = resp.publicKey.toString();
+    <input type="text" placeholder="Entrer ID Machine / Clé..." />
 
-        const encodedMessage = new TextEncoder().encode(MESSAGE);
-        const signed = await provider.signMessage(encodedMessage, "utf8");
-        const signature = signed.signature;
+    <button class="enter-btn">Déchiffrer</button>
 
-        const verified = nacl.sign.detached.verify(
-          encodedMessage,
-          new Uint8Array(signature),
-          new Uint8Array(resp.publicKey.toBytes ? resp.publicKey.toBytes() : bs58.decode(wallet))
-        );
+    <p style="margin-top:30px;"><em>Note : Toute tentative non cryo-validée sera ignorée.</em></p>
+  </section>
 
-        if (verified && wallet === ADMIN_ADDRESS) {
-          status.innerHTML = `✅ Signature validée<br>Accès PX-ADMIN débloqué`;
-          showTerminalLinks();
-        } else {
-          document.getElementById("terminal").innerHTML =
-            "<h1 style='color:red;'>🚫 PX-ADMIN verrouillé</h1><br>Signature non reconnue.";
-        }
-      } catch (e) {
-        status.textContent = "❌ Connexion annulée.";
-        console.error(e);
-      }
-    }
+  <footer>
+    &copy; 2025 PX SYSTEM — Console sécurisée hors flux
+  </footer>
 
-    function showTerminalLinks() {
-      const terminal = document.getElementById("terminal");
-      terminal.innerHTML = `
-        <h1>> PX-ADMIN // Terminal Root</h1>
-        > Accès cryogénique : ADMIN_VALIDÉ<br><br>
-        <a class="link" href="index.html?admin=on">🔁 index.html</a>
-        <a class="link" href="ACCESS.html?admin=on">🛰️ ACCESS.html</a>
-        <a class="link" href="PX-NFT.html?admin=on">🧬 PX-NFT.html</a>
-        <a class="link" href="px-xtr-17.html?admin=on">🧠 PX-XTR-17</a>
-        <a class="link" href="vault.html?admin=on">🔒 vault.html</a>
-        <a class="link" href="about.html?admin=on">📄 about.html</a>
-        <a class="link" href="archive.html?admin=on">🗃️ archive.html</a>
-        <a class="link" href="claimNFT.html?admin=on">🎖️ claimNFT.html</a>
-        <a class="link" href="faq.html?admin=on">❓ faq.html</a>
-        <a class="link" href="flightlog.html?admin=on">📡 flightlog.html</a>
-        <a class="link" href="lore.html?admin=on">📜 lore.html</a>
-        <a class="link" href="px-core.html?admin=on">🧩 px-core.html</a>
-        <a class="link" href="registre.html?admin=on">🗂️ registre.html</a>
-        <a class="link" href="templatePX.html?admin=on">🧱 templatePX.html</a>
-        <a class="link" href="404.html?admin=on">🚫 404.html</a>
-      `;
-    }
-
-    // Lib nacl pour vérification cryptographique
-    const script = document.createElement('script');
-    script.src = "https://cdn.jsdelivr.net/npm/tweetnacl-util/nacl-util.min.js";
-    script.onload = () => {
-      const script2 = document.createElement('script');
-      script2.src = "https://cdn.jsdelivr.net/npm/tweetnacl/nacl.min.js";
-      document.body.appendChild(script2);
-    };
-    document.head.appendChild(script);
-
-    document.getElementById("connect").addEventListener("click", verifyAdmin);
-  </script>
 </body>
 </html>
