@@ -6,6 +6,7 @@ const minPX = 2500;
 document.getElementById("connectBtn").addEventListener("click", async () => {
   const status = document.getElementById("status");
   const loader = document.getElementById("loader");
+
   loader.classList.remove("hidden");
   status.textContent = "";
 
@@ -28,7 +29,7 @@ document.getElementById("connectBtn").addEventListener("click", async () => {
       {
         programId: new solanaWeb3.PublicKey(
           "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
-        )
+        ),
       }
     );
 
@@ -44,16 +45,19 @@ document.getElementById("connectBtn").addEventListener("click", async () => {
 
     if (amount >= minPX) {
       const successMsg = document.createElement("div");
-      successMsg.style = "position:fixed;bottom:20px;right:20px;background:#000000cc;border:1px solid #00ffe1;color:#00ffe1;padding:10px;font-family:monospace;font-size:0.9em;z-index:9999;";
-      successMsg.innerHTML = `🛰️ Accès confirmé<br>${wallet.slice(0, 4)}...${wallet.slice(-4)}<br>💠 ${amount} PX`;
+      successMsg.style =
+        "position:fixed;bottom:20px;right:20px;background:#000000cc;border:1px solid #00ffe1;color:#00ffe1;padding:10px;font-family:monospace;font-size:0.9em;z-index:9999;";
+      successMsg.innerHTML = `🚀 Accès confirmé<br>${wallet.slice(
+        0,
+        4
+      )}...${wallet.slice(-4)}<br>💠 ${amount} PX`;
       document.body.appendChild(successMsg);
     } else {
       status.textContent = `⛔ Accès refusé. ${amount} PX trouvés, ${minPX} requis.`;
     }
-
   } catch (e) {
     loader.classList.add("hidden");
     status.textContent = "❌ Erreur de vérification.";
-    console.error("🧊 Erreur secureCheck :", e);
+    console.error("🧪 Erreur secureCheck :", e);
   }
 });
