@@ -1,9 +1,14 @@
-/* === RESET GÉNÉRAL === */
-body {
+/* === RESET & TYPO === */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
   background-color: #000;
   color: #00ffc6;
   font-family: monospace;
+  line-height: 1.5;
 }
 
 /* === NAVIGATION === */
@@ -14,19 +19,19 @@ nav ul {
   gap: 20px;
   justify-content: center;
   padding: 10px;
-  margin: 0;
   background-color: #111;
 }
 nav a {
   color: #00ffe1;
   text-decoration: none;
   padding: 5px 10px;
+  transition: color 0.3s ease;
 }
 nav a.active {
   border-bottom: 2px solid #00ffe1;
 }
 
-/* === STRUCTURE CENTRÉE === */
+/* === LAYOUT GENERAL === */
 h1, h2, p, section, footer, header {
   text-align: center;
 }
@@ -36,7 +41,7 @@ section {
   padding: 20px;
 }
 
-/* === HEADER HERO (avec logo + titre) === */
+/* === HERO HEADER === */
 .hero {
   display: flex;
   justify-content: center;
@@ -62,14 +67,87 @@ section {
   margin-top: 8px;
 }
 
-/* === PIED DE PAGE === */
-footer {
-  margin-top: 60px;
-  color: #666;
-  font-size: 0.9rem;
+/* === TERMINAUX (INPUTS) === */
+input[type="text"] {
+  background: #000;
+  color: #00ffe1;
+  border: none;
+  border-bottom: 1px solid #00ffe1;
+  font-size: 1rem;
+  width: 100%;
+  padding: 8px;
+  outline: none;
 }
 
-/* === LOADER CRYO === */
+/* === BLOCS TERMINAL/VOUTE === */
+.terminal, .vault {
+  background: #0a0a0a;
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 0 20px rgba(0, 255, 240, 0.1);
+  max-width: 800px;
+  margin: 60px auto;
+}
+
+/* === BOUTONS CRYO === */
+.enter-btn, .buy-px-btn {
+  margin-top: 20px;
+  background: transparent;
+  border: 2px solid #00ffe1;
+  color: #00ffe1;
+  font-size: 1em;
+  padding: 10px 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  font-family: inherit;
+}
+.enter-btn:hover, .buy-px-btn:hover {
+  background: #00ffe122;
+  box-shadow: 0 0 12px #00ffe1;
+  transform: scale(1.05);
+}
+
+/* === LIENS ADMIN === */
+.admin-link {
+  margin-top: 30px;
+  display: inline-block;
+  color: #00ffe1;
+  font-family: monospace;
+  font-size: 0.95em;
+  text-decoration: none;
+  border-bottom: 1px dashed #00ffe1;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+.admin-link:hover {
+  opacity: 1;
+  border-bottom: 1px solid #00ffe1;
+  transform: scale(1.03);
+}
+
+/* === FRAGMENTS PX === */
+.fragment {
+  display: inline-block;
+  margin: 20px;
+  text-align: center;
+}
+.fragment img {
+  width: 150px;
+  height: auto;
+  border: 2px solid #00ffc6;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto 8px;
+}
+.fragment p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #00ffe1;
+}
+
+/* === LOADER ANIMÉ === */
 .cryo-pulse {
   width: 20px;
   height: 20px;
@@ -95,48 +173,7 @@ footer {
   100% { transform: scale(1.2); opacity: 1; }
 }
 
-/* === FRAGMENTS PX POUR registre.html === */
-.fragment {
-  display: inline-block;
-  margin: 20px;
-  text-align: center;
-}
-.fragment img {
-  width: 150px;
-  height: auto;
-  border: 2px solid #00ffc6;
-  border-radius: 8px;
-  display: block;
-  margin: 0 auto 8px;
-}
-.fragment p {
-  margin: 0;
-  font-size: 0.95rem;
-  color: #00ffe1;
-}
-
-/* === TERMINAUX (ACCESS / VAULT) === */
-input[type="text"] {
-  background: #000;
-  color: #00ffe1;
-  border: none;
-  border-bottom: 1px solid #00ffe1;
-  font-size: 1rem;
-  width: 100%;
-  padding: 8px;
-  outline: none;
-}
-.terminal, .vault {
-  background: #0a0a0a;
-  border: 1px solid #222;
-  border-radius: 8px;
-  padding: 30px;
-  box-shadow: 0 0 20px rgba(0, 255, 240, 0.1);
-  max-width: 800px;
-  margin: 60px auto;
-}
-
-/* === 404 === */
+/* === ERREUR / 404 === */
 .error-code {
   font-size: 2.5rem;
   color: #ff0044;
@@ -145,46 +182,10 @@ input[type="text"] {
   color: #888;
   margin-top: 10px;
 }
-a {
-  color: #00ffe1;
-  text-decoration: none;
-}
 
-/* === BOUTONS PX === */
-.enter-btn,
-.buy-px-btn {
-  margin-top: 20px;
-  background: transparent;
-  border: 2px solid #00ffe1;
-  color: #00ffe1;
-  font-size: 1em;
-  padding: 10px 24px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  font-family: inherit;
-}
-.enter-btn:hover,
-.buy-px-btn:hover {
-  background: #00ffe122;
-  box-shadow: 0 0 12px #00ffe1;
-  transform: scale(1.05);
-}
-
-/* === LIEN ADMIN PX === */
-.admin-link {
-  margin-top: 30px;
-  display: inline-block;
-  color: #00ffe1;
-  font-family: monospace;
-  font-size: 0.95em;
-  text-decoration: none;
-  border-bottom: 1px dashed #00ffe1;
-  opacity: 0.7;
-  transition: all 0.3s ease;
-}
-.admin-link:hover {
-  opacity: 1;
-  border-bottom: 1px solid #00ffe1;
-  transform: scale(1.03);
+/* === FOOTER === */
+footer {
+  margin-top: 60px;
+  color: #666;
+  font-size: 0.9rem;
 }
