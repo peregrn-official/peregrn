@@ -1,79 +1,53 @@
 <!DOCTYPE html>
-<html lang="fr" translate="no">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>À propos — PEREGRN</title>
-  <meta name="robots" content="noindex" />
+  <title>À propos de PX</title>
+  <meta name="description" content="PX est une expérience cryogénique NFT sans règles ni roadmap. Juste une frappe numérique brute sur Solana." />
+  <meta name="keywords" content="PX, NFT, à propos, manifeste, crypto, Solana, expérimentation" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="style.css" />
-
-  <!-- 🔒 Bloc anti-accès direct -->
-  <script>
-    const allowedReferrer = "https://peregrn-official.github.io/peregrn/";
-    if (!document.referrer.startsWith(allowedReferrer)) {
-      alert("⛔ Accès direct non autorisé. Redirection vers le terminal PX.");
-      window.location.href = "index.html";
-    }
-  </script>
-
-  <!-- 🧠 Déclencheur clavier : VAULT1 -->
-  <script>
-    document.addEventListener("keydown", function(e) {
-      window.vaultKeys = (window.vaultKeys || "") + e.key;
-      if (window.vaultKeys.toUpperCase().includes("VAULT1")) {
-        window.location.href = "px-xtr-17.html";
-      }
-    });
-  </script>
 </head>
-
 <body>
 
-  <div id="cryo-loader">
-    <div class="cryo-pulse"></div>
-    <p>Décompression cryogénique en cours...</p>
-  </div>
-
+  <!-- NAVIGATION -->
   <nav>
     <ul>
       <li><a href="index.html">Accueil</a></li>
+      <li><a href="claimNFT.html">Mint</a></li>
+      <li><a href="registre.html">Fragments</a></li>
       <li><a href="about.html" class="active">À propos</a></li>
       <li><a href="faq.html">FAQ</a></li>
-      <li><a href="flightlog.html">Journal de vol</a></li>
-      <li><a href="registre.html">Registre Cryo</a></li>
-      <li><a href="lore.html">Lore</a></li>
-      <li><a href="ACCESS.html">ACCESS</a></li>
     </ul>
   </nav>
 
-  <h1>À propos</h1>
+  <!-- HERO -->
+  <div class="hero">
+    <img src="assets/logo.png" alt="Logo PX" class="logo" />
+    <div class="hero-text">
+      <h1>Le Projet PX</h1>
+      <p>“Un fragment, un instant. Sans futur. Sans permission.”</p>
+    </div>
+  </div>
 
-  <section>
-    <p>$PEREGRN ne se vend pas. Il s’inscrit.</p>
-    <p>Ce n’est pas une communauté. C’est une fréquence.</p>
-    <p>Aucune promesse, aucun leader, aucun avenir balisé.</p>
-    <p>Seulement des fragments cryogéniques, des mémoires compressées, et une écriture sur bitume brut.</p>
-    <p>Tu peux lire. Tu peux mentir. Mais une fois vu, tu ne pourras plus dés-voir.</p>
+  <!-- SECTION DESCRIPTION -->
+  <section class="terminal">
+    <h2>Une expérience cryogénique</h2>
+    <p><strong>PX</strong> est un projet NFT né du froid : pas de roadmap, pas de promesses, pas de leaders. Juste un protocole autonome déployé sur Solana qui frappe de manière aléatoire des fragments visuels.</p>
+
+    <p>Chaque token PX est unique, figé dans une esthétique rétro-punk et crypto-désabusée. On ne te demande rien, sauf de frapper. Et de disparaître (ou pas).</p>
+
+    <p><em>PX n’est pas un club. C’est une interruption.</em></p>
+
+    <h2 style="margin-top: 40px;">Pourquoi ?</h2>
+    <p>Pour décentraliser l’absurde. Pour créer sans attendre de permission. Pour laisser une trace qui ne demande pas l’accord d’être vue.</p>
+    <p>Un fragment PX = une possibilité inexploitée.</p>
   </section>
 
+  <!-- FOOTER -->
   <footer>
-    <p>&copy; 2025 PEREGRN — cryo-compilé sans roadmap</p>
+    &copy; 2025 PX SYSTEM — écrit sans validation, publié sans contexte 💠
   </footer>
-
-  <!-- 🔐 Liaison Web3 PX -->
-  <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
-  <script src="secureCheck.js"></script>
-
-  <!-- ⏳ Animation disparition loader -->
-  <script>
-    window.addEventListener("load", () => {
-      const loader = document.getElementById("cryo-loader");
-      if (loader) {
-        loader.style.transition = "opacity 0.5s ease";
-        loader.style.opacity = 0;
-        setTimeout(() => (loader.style.display = "none"), 500);
-      }
-    });
-  </script>
 
 </body>
 </html>
