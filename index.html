@@ -2,9 +2,23 @@
 <html lang="fr" translate="no">
 <head>
   <meta charset="UTF-8" />
-  <title>PEREGRN — Sas PX</title>
-  <meta name="robots" content="index" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>PEREGRN — Sas PX | Expérience cryogénique visuelle</title>
+
+  <!-- SEO -->
+  <meta name="robots" content="index, follow" />
+  <meta name="description" content="Entrez dans le Sas PX, une expérience cryogénique immersive signée PEREGRN. Plongez dans une interface futuriste inspirée des terminaux numériques." />
+
+  <!-- Open Graph (réseaux sociaux) -->
+  <meta property="og:title" content="PEREGRN — Sas PX" />
+  <meta property="og:description" content="Expérience cryogénique immersive par PEREGRN." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://peregrn.github.io/peregrn/" />
+
+  <!-- CSS -->
   <style>
+    /* Styles inchangés (glow, terminal, etc.) */
     body {
       background: radial-gradient(ellipse at center, #001015, #000);
       color: #00ffe1;
@@ -30,7 +44,7 @@
     }
     @keyframes flicker {
       from { opacity: 0.88; }
-      to   { opacity: 1; }
+      to { opacity: 1; }
     }
     .cryo-glow {
       position: fixed;
@@ -41,9 +55,8 @@
       animation: pulseGlow 4s infinite;
     }
     @keyframes pulseGlow {
-      0%   { opacity: 0.2; }
-      50%  { opacity: 0.5; }
-      100% { opacity: 0.2; }
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 0.5; }
     }
     .enter-btn {
       margin-top: 40px;
@@ -64,10 +77,10 @@
 </head>
 <body>
   <div class="cryo-glow"></div>
-  <div class="terminal-container">
+  <main class="terminal-container">
     <div class="typewriter" id="introText"></div>
     <button class="enter-btn" onclick="window.location.href='ACCESS.html'">🔓 Entrer dans le sas PX</button>
-  </div>
+  </main>
 
   <script>
     const introLines = [
