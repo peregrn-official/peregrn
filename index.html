@@ -8,45 +8,105 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+
+  <!-- Librairies -->
+  <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+  <script src="secureCheck.js" defer></script>
+  <script>
+    // Gate cryo : protège la page d'accueil
+    async function checkPXGate() {
+      const mintPX = "DK3h83B1nbfTuP4pnAiXeiSQp7mHnZAZVeKa1Xmtpump";
+      const minPX = 2500;
+
+      const gate = document.getElementById("cryo-gate");
+      const content = document.getElementById("page-content");
+      const status = document.getElementById("status");
+
+      try {
+        if (!window.solana || !window.solana.isPhantom) {
+          status.textContent = "🛑 Phantom Wallet requis.";
+          return;
+        }
+
+        const resp = await window.solana.connect();
+        const wallet = resp.publicKey.toString();
+
+        const conn = new solanaWeb3.Connection(
+          "https://mainnet.helius-rpc.com/?api-key=d50bd88d-c6aa-4b1b-af8c-9d9bfba9ffe3"
+        );
+
+        const tokens = await conn.getParsedTokenAccountsByOwner(
+          new solanaWeb3.PublicKey(wallet),
+          {
+            programId: new solanaWeb3.PublicKey("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"),
+          }
+        );
+
+        let balance = 0;
+        tokens.value.forEach((acc) => {
+          const info = acc.account.data.parsed.info;
+          if (info.mint === mintPX) {
+            balance = parseFloat(info.tokenAmount.uiAmount);
+          }
+        });
+
+        if (balance >= minPX) {
+          gate.style.display = "none";
+          content.style.display = "block";
+        } else {
+          status.innerHTML = `⛔ Accès refusé (${balance} PX détectés)<br>Minimum requis : ${minPX} PX.`;
+        }
+      } catch (e) {
+        status.textContent = "❌ Erreur de vérification.";
+        console.error(e);
+      }
+    }
+  </script>
 </head>
-<body>
+<body onload="checkPXGate()">
 
-  <!-- NAVIGATION -->
-  <nav>
-    <ul>
-      <li><a href="index.html" class="active">Accueil</a></li>
-      <li><a href="claimNFT.html">Mint</a></li>
-      <li><a href="registre.html">Fragments</a></li>
-      <li><a href="about.html">À propos</a></li>
-      <li><a href="faq.html">FAQ</a></li>
-    </ul>
-  </nav>
+  <!-- CRYO-GATE -->
+  <div id="cryo-gate" class="terminal">
+    <h2>🔐 Accès sécurisé</h2>
+    <p>Connecte ton wallet pour accéder au portail PX.</p>
+    <button id="connectBtn" class="enter-btn" onclick="checkPXGate()">🔗 Connecter Wallet</button>
+    <div id="status" style="margin-top:20px;"></div>
+  </div>
 
-  <!-- HERO -->
-  <div class="hero">
-    <img src="assets/logo.png" alt="Logo PX" class="logo" />
-    <div class="hero-text">
-      <h1>Bienvenue dans le Cryo-Mint PX</h1>
-      <p>Une loterie NFT sans règles, sans futur. Juste Solana et le chaos.</p>
+  <!-- CONTENU PROTÉGÉ -->
+  <div id="page-content" style="display:none;">
+    <nav>
+      <ul>
+        <li><a href="index.html" class="active">Accueil</a></li>
+        <li><a href="claimNFT.html">Mint</a></li>
+        <li><a href="registre.html">Fragments</a></li>
+        <li><a href="about.html">À propos</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero">
+      <img src="assets/logo.png" alt="Logo PX" class="logo" />
+      <div class="hero-text">
+        <h1>Bienvenue dans le Cryo-Mint PX</h1>
+        <p>Une loterie NFT sans règles, sans futur. Juste Solana et le chaos.</p>
+      </div>
     </div>
+
+    <section>
+      <h2>Le Protocole PX</h2>
+      <p>$PX est un artefact cryogénique libéré sur Solana. Aucun VC. Aucun marketing. Juste une frappe aléatoire et stylée.</p>
+      <a href="claimNFT.html" class="enter-btn">Obtenir mon token</a>
+    </section>
+
+    <div style="text-align:center; margin-top: 60px;">
+      <a href="PX-ADMIN.html" class="admin-link">Accès Admin</a>
+    </div>
+
+    <footer>
+      &copy; 2025 PX SYSTEM — propulsé sans roadmap depuis la stratosphère
+    </footer>
   </div>
-
-  <!-- SECTION PRÉSENTATION -->
-  <section>
-    <h2>Le Protocole PX</h2>
-    <p>$PX est un artefact cryogénique libéré sur Solana. Aucun VC. Aucun marketing. Juste une frappe aléatoire et stylée.</p>
-    <a href="claimNFT.html" class="enter-btn">Obtenir mon token</a>
-  </section>
-
-  <!-- LIEN ADMIN DISCRET -->
-  <div style="text-align:center; margin-top: 60px;">
-    <a href="PX-ADMIN.html" class="admin-link">Accès Admin</a>
-  </div>
-
-  <!-- FOOTER -->
-  <footer>
-    &copy; 2025 PX SYSTEM — propulsé sans roadmap depuis la stratosphère
-  </footer>
 
 </body>
 </html>
