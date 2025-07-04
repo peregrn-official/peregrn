@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>ACCESS — Sas PX | PEREGRN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
+
   <!-- ✅ SEO -->
   <meta name="robots" content="index, follow" />
   <meta name="description" content="Terminal d’accès PX par PEREGRN. Entrez le code ou connectez votre wallet pour franchir le seuil cryogénique." />
@@ -15,58 +15,61 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://peregrn.github.io/peregrn/ACCESS.html" />
 
-  <!-- Style -->
+  <!-- 💠 Style -->
   <link rel="stylesheet" href="style.css" />
-  <style>
-    /* ...styles inchangés... */
-  </style>
 </head>
 <body>
-  <div class="cryo-glow"></div>
-  <div class="terminal-container">
-    <div class="typewriter" id="introText"></div>
-    <div class="access-input">
-      <input type="text" id="access-code" placeholder="ENTRER CODE PX..." onkeypress="checkCode(event)" />
-    </div>
-    <button id="connectBtn">🔗 Connecter Wallet</button>
-    <div id="loader">⏳ Connexion PX en cours...</div>
-    <div id="status"></div>
-    <div class="code-response" id="codeResponse"></div>
-  </div>
 
-  <!-- Librairie JS -->
-  <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
-  <script src="secureCheck.js"></script>
+  <nav>
+    <ul>
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="claimNFT.html">Mint</a></li>
+      <li><a href="registre.html">Fragments</a></li>
+    </ul>
+  </nav>
+
+  <section class="terminal">
+    <h2>Terminal ACCESS PX</h2>
+
+    <p id="introText">Veuillez entrer votre code d’accès ou connecter un wallet Solana :</p>
+
+    <input type="text" id="access-code" placeholder="ENTRER CODE PX..." onkeypress="checkCode(event)" />
+
+    <button id="connectBtn" class="enter-btn">🔗 Connecter Wallet</button>
+
+    <div id="loader" style="display:none; margin-top: 20px;">⏳ Connexion PX en cours...</div>
+    <div id="status" style="margin-top: 20px;"></div>
+    <div id="codeResponse" class="code-response"></div>
+  </section>
+
+  <footer>
+    &copy; 2025 PX SYSTEM — Terminal cryo PX par PEREGRN
+  </footer>
+
   <script>
-    const lines = [
-      "> [PX-TERMINAL] Initialisation…",
-      "> Connexion cryogénique établie",
-      "> Scan PX en attente…",
-      "> Entrée manuelle ou wallet nécessaire.",
-      "",
-      "> Si tu comprends, tu as déjà vu l’intérieur."
-    ];
-    let i = 0;
-    function typeLine() {
-      if (i < lines.length) {
-        document.getElementById("introText").innerHTML += lines[i] + "\\n";
-        i++;
-        setTimeout(typeLine, 700);
-      }
-    }
-    window.onload = typeLine;
-
     function checkCode(e) {
       if (e.key === "Enter") {
-        const input = document.getElementById("access-code").value.trim().toUpperCase();
-        const output = document.getElementById("codeResponse");
+        const input = document.getElementById("access-code").value.trim();
+        const response = document.getElementById("codeResponse");
         if (input === "PX-006") {
-          output.innerHTML = "🚀 Liaison PX établie. Fragment déverrouillé.<br>➤ 'Altitude n’est pas une position. C’est une mémoire de trajectoire.'";
+          response.innerHTML = "✅ Code accepté : accès au Fragment déverrouillé.";
         } else {
-          output.innerHTML = "🔒 Code inconnu. Reviens quand tu ressens le sas.";
+          response.innerHTML = "❌ Code inconnu ou expiré.";
         }
       }
     }
+
+    document.getElementById("connectBtn").addEventListener("click", () => {
+      const loader = document.getElementById("loader");
+      const status = document.getElementById("status");
+      loader.style.display = "block";
+      status.innerText = "";
+      setTimeout(() => {
+        loader.style.display = "none";
+        status.innerHTML = "🧬 Connexion simulée. Intégration réelle à venir (Phantom / Backpack).";
+      }, 2500);
+    });
   </script>
+
 </body>
 </html>
