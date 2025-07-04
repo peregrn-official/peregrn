@@ -1,80 +1,46 @@
 <!DOCTYPE html>
-<html lang="fr" translate="no">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>FAQ — PEREGRN</title>
-  <meta name="robots" content="noindex" />
+  <title>FAQ PX — Questions Frappées</title>
+  <meta name="description" content="Questions fréquentes sur le projet NFT PX. Ou peut-être juste des énigmes." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="style.css" />
-
-  <!-- 🔒 Sécurité accès direct -->
-  <script>
-    const allowedReferrer = "https://peregrn-official.github.io/peregrn/";
-    if (!document.referrer.startsWith(allowedReferrer)) {
-      alert("⛔ Accès direct non autorisé. Redirection vers le terminal PX.");
-      window.location.href = "index.html";
-    }
-  </script>
-
-  <!-- 🧠 Trigger clavier : VAULT1 -->
-  <script>
-    document.addEventListener("keydown", function(e) {
-      window.vaultKeys = (window.vaultKeys || "") + e.key;
-      if (window.vaultKeys.toUpperCase().includes("VAULT1")) {
-        window.location.href = "px-xtr-17.html";
-      }
-    });
-  </script>
 </head>
-
 <body>
-
-  <div id="cryo-loader">
-    <div class="cryo-pulse"></div>
-    <p>Décompression cryogénique en cours...</p>
-  </div>
 
   <nav>
     <ul>
       <li><a href="index.html">Accueil</a></li>
+      <li><a href="claimNFT.html">Mint</a></li>
+      <li><a href="registre.html">Fragments</a></li>
       <li><a href="about.html">À propos</a></li>
       <li><a href="faq.html" class="active">FAQ</a></li>
-      <li><a href="flightlog.html">Journal de vol</a></li>
-      <li><a href="registre.html">Registre Cryo</a></li>
-      <li><a href="lore.html">Lore</a></li>
-      <li><a href="ACCESS.html">ACCESS</a></li>
     </ul>
   </nav>
 
-  <h1>FAQ</h1>
-  <section>
-    <h2>Est-ce un projet sérieux ?</h2>
-    <p>Suffisamment pour ne rien promettre.</p>
+  <section class="terminal">
+    <h2>FAQ PX</h2>
 
-    <h2>Quand la roadmap ?</h2>
-    <p>Il n'y en a pas. C’est le protocole qui trace la route.</p>
+    <p><strong>→ Qu’est-ce que PX ?</strong><br />
+    Une expérience cryogénique NFT. Un glitch dans le système. Un protocole sans explication.</p>
 
-    <h2>Qui dirige ?</h2>
-    <p>Personne. Ou tout le monde. Le bitume est horizontal.</p>
+    <p><strong>→ Combien de fragments PX existe-t-il ?</strong><br />
+    100 pour l’instant. Assez pour provoquer une défragmentation.</p>
+
+    <p><strong>→ Est-ce que PX a une roadmap ?</strong><br />
+    Non. PX n’a même pas de direction.</p>
+
+    <p><strong>→ Puis-je rejoindre une communauté PX ?</strong><br />
+    Tu es déjà dedans. Ou dehors. Ou les deux.</p>
+
+    <p><strong>→ Est-ce risqué ?</strong><br />
+    Seulement si tu te demandes encore si ça en vaut la peine.</p>
   </section>
 
   <footer>
-    <p>&copy; 2025 PEREGRN — cryo-compilé sans roadmap</p>
+    &copy; 2025 PX SYSTEM — F.A.Q = Fragments À Questionner 💠
   </footer>
 
-  <!-- 🔐 Sécurité Web3 + solde PX -->
-  <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
-  <script src="secureCheck.js"></script>
-
-  <!-- ⏳ Loader -->
-  <script>
-    window.addEventListener("load", () => {
-      const loader = document.getElementById("cryo-loader");
-      if (loader) {
-        loader.style.transition = "opacity 0.5s ease";
-        loader.style.opacity = 0;
-        setTimeout(() => loader.style.display = "none", 500);
-      }
-    });
-  </script>
 </body>
 </html>
