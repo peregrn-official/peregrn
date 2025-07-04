@@ -1,7 +1,7 @@
-// secureCheck.js — version déclenchée par clic (anti-boucle)
+// secureCheck.js — Vérification cryogénique PX
 
-const mintPX = "DK3h83B1nbfTuP4pnAiXeiSQp7mHnZAZVeKa1Xmtpump";
-const minPX = 2500;
+const mintPX = "DK3h83B1nbfTuP4pnAiXeiSQp7mHnZAZVeKa1Xmtpump"; // Mint du token PX
+const minPX = 2500; // Seuil minimum requis
 
 document.getElementById("connectBtn").addEventListener("click", async () => {
   const status = document.getElementById("status");
