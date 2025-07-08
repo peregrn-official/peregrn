@@ -4,11 +4,53 @@
   <meta charset="UTF-8">
   <title>Terminal ACCESS PX</title>
   <link rel="stylesheet" href="../style.css">
+  <style>
+    /* Optionnel : petit effet glitch visuel */
+    .glitch {
+      animation: glitch 0.3s infinite;
+    }
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      33% { transform: translate(-2px, 1px); }
+      66% { transform: translate(2px, -1px); }
+      100% { transform: translate(0); }
+    }
+  </style>
 </head>
 <body>
   <div class="terminal">
     <h2>Terminal ACCESS PX</h2>
     <input type="text" id="access-code" placeholder="ENTRER CODE PX...">
+    <p id="feedback" style="color: red; font-weight: bold;"></p>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const input = document.getElementById('access-code');
+      const feedback = document.getElementById('feedback');
+
+      input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          const code = input.value.trim().toUpperCase();
+          const valid = /^PX-[0-9]{3}$/.test(code);
+
+          if (valid) {
+            document.body.classList.add('glitch'); // animation optionnelle
+            setTimeout(() => {
+              const target =
+                code === 'PX-017'
+                  ? 'px-xtr-17.html'
+                  : `fragment-${code.slice(3)}.html`;
+              window.location.href = `/peregrn/pages/${target}`;
+            }, 800); // petite pause glitch
+          } else {
+            feedback.textContent = 'Code PX invalide. Format attendu : PX-XXX';
+            input.classList.add('glitch');
+            setTimeout(() => input.classList.remove('glitch'), 300);
+          }
+        }
+      });
+    });
+  </script>
 </body>
 </html>
