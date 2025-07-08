@@ -1,0 +1,18 @@
+:root {
+  --neon-pink: #ff0044;
+  --neon-cyan: #00ffe1;
+  --dark-bg: #0a0a12;
+}
+
+body {
+  background: radial-gradient(ellipse at center, var(--dark-bg) 0%, #000 100%);
+  margin: 0;
+  min-height: 100vh;
+}
+
+.cyber-link {
+  color: var(--neon-cyan);
+  text-decoration: none;
+  border: 1px solid var(--neon-cyan);
+  padding: 0.5rem 1rem;
+}
