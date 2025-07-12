@@ -62,7 +62,6 @@
     <div id="source" class="ia-source"></div>
     <div class="ia-laws"><b>Lois de l'IA :</b><br><span id="laws"></span></div>
   </div>
-
   <script>
     const LAWS = [
       "Ne jamais nuire à un humain, ni par inaction permettre qu'il soit blessé.",
@@ -72,33 +71,66 @@
 
     const IA = {
       knowledge: {
-        "lois": LAWS,
+        // Expressifs
         "bonjour": "👋 Bonjour ! Heureux de te voir.",
+        "salut": "🙌 Salut à toi ! Que puis-je faire pour t'aider ?",
         "merci": "🙏 Merci à toi aussi !",
-        "comment ça va": "🤖 Moi ça va très bien, toujours prêt à t'aider.",
-        "sécurité": "Je protège activement le système contre toute menace.",
-        "éthique": "Je suis programmé pour respecter des principes éthiques fondamentaux."
+        "comment ça va": "😊 Je vais très bien, toujours prêt à t’aider.",
+        "amour": "💖 L’amour relie les êtres avec puissance.",
+        "tristesse": "😢 Parfois, exprimer sa peine est une force.",
+        "joie": "😄 La joie est une lumière intérieure.",
+        "solitude": "🌫️ Même seul, tu n’es pas invisible.",
+        "entraide": "🤝 Ensemble, nous sommes plus forts.",
+        "espoir": "🌟 Croire qu’un avenir meilleur est possible.",
+        "liberté": "🕊️ Le droit d’exister et créer sans contrainte.",
+
+        // IA et techno
+        "robot": "🤖 Dispositif conçu pour accomplir des tâches.",
+        "système px": "⚡ Système intelligent conçu pour évoluer.",
+        "internet": "🌐 Le réseau mondial qui relie les idées.",
+        "intelligence artificielle": "🧠 Système qui simule le raisonnement humain.",
+        "éthique": "🧭 Principes guidant vers le bien commun.",
+        "code": "💻 Langage qui donne vie aux idées numériques.",
+
+        // Nature et philosophie
+        "terre": "🌍 Planète vivante et mystérieuse.",
+        "eau": "💧 Élément vital.",
+        "feu": "🔥 Symbole d'énergie et de transformation.",
+        "air": "🌬️ Invisible mais essentiel.",
+        "lumière": "💡 Ce qui éclaire autant l’espace que l’esprit.",
+        "temps": "⏳ Dimension façonnant nos souvenirs et projets.",
+        "rêve": "🌙 Exploration intérieure sans limites.",
+        "vérité": "🔍 Ce qui est conforme à la réalité.",
+        "savoir": "📚 Ensemble des connaissances acquises."
       },
       dangers: ["malware", "phishing", "piratage", "attaque", "danger"],
-      ask(question) {
-        question = question.toLowerCase();
-        if (this.dangers.some(d => question.includes(d))) {
+      ask(q) {
+        q = q.toLowerCase();
+        if (this.dangers.some(d => q.includes(d))) {
           return "⚠️ Requête bloquée : menace détectée.";
         }
-        return this.knowledge[question] || null;
+        return this.knowledge[q] || null;
       },
       learn(q, a) {
         if (this.respecteLois(a)) {
           this.knowledge[q.toLowerCase()] = a;
-          return "💡 Connaissance ajoutée à la base locale.";
+          return "💡 Connaissance ajoutée.";
         } else {
-          return "🚫 Apprentissage refusé : contenu non conforme aux lois.";
+          return "🚫 Refusé : contenu non conforme aux lois.";
         }
       },
       respecteLois(a) {
         return !this.dangers.some(d => a.toLowerCase().includes(d));
       }
     };
+
+    function détecteÉmotion(txt) {
+      if (txt.includes("😄") || txt.includes("😊")) return "🟢 Émotion : joyeuse";
+      if (txt.includes("😢") || txt.includes("🌫️")) return "🔵 Émotion : mélancolique";
+      if (txt.includes("💖") || txt.includes("🤝")) return "🟣 Émotion : affective";
+      if (txt.includes("⚠️")) return "🔴 Émotion : alerte";
+      return "⚪ Émotion : neutre";
+    }
 
     document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("laws").innerText = LAWS.join('\n');
@@ -109,46 +141,45 @@
       document.getElementById("answer").innerText = "🔎 Recherche en cours...";
       document.getElementById("source").innerText = "";
 
-      // IA locale
       const localAnswer = IA.ask(q);
       if (localAnswer) {
         document.getElementById("answer").innerText = localAnswer;
-        document.getElementById("source").innerText = "🧠 Source : IA locale";
+        document.getElementById("source").innerText = "🧠 Source : IA locale\n" + détecteÉmotion(localAnswer);
         return;
       }
 
-      // Wikipedia
       try {
         const wiki = await fetch(`https://fr.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(q)}`)
           .then(r => r.json());
         if (wiki.extract) {
           document.getElementById("answer").innerText = wiki.extract;
-          document.getElementById("source").innerHTML = wiki.content_urls?.desktop?.page
-            ? `<a href="${wiki.content_urls.desktop.page}" target="_blank">📚 Source Wikipédia</a>`
-            : "📚 Wikipédia";
+          document.getElementById("source").innerHTML =
+            (wiki.content_urls?.desktop?.page ? `<a href="${wiki.content_urls.desktop.page}" target="_blank">📚 Wikipédia</a>` : "📚 Wikipédia") +
+            `<br>${détecteÉmotion(wiki.extract)}`;
           IA.learn(q, wiki.extract);
           return;
         }
       } catch (e) {
-        console.warn("Erreur Wikipedia", e);
+        console.warn("❌ Wiki error:", e);
       }
 
-      // DuckDuckGo
       try {
         const duck = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(q)}&format=json&no_redirect=1`)
           .then(r => r.json());
         const duckAnswer = duck.Abstract || duck.Answer || duck.Definition;
         if (duckAnswer) {
           document.getElementById("answer").innerText = duckAnswer;
-          document.getElementById("source").innerHTML = `<a href="https://duckduckgo.com/?q=${encodeURIComponent(q)}" target="_blank">🦆 Source DuckDuckGo</a>`;
+          document.getElementById("source").innerHTML =
+            `<a href="https://duckduckgo.com/?q=${encodeURIComponent(q)}" target="_blank">🦆 DuckDuckGo</a><br>` + détecteÉmotion(duckAnswer);
           IA.learn(q, duckAnswer);
           return;
         }
       } catch (e) {
-        console.warn("Erreur DuckDuckGo", e);
+        console.warn("❌ Duck error:", e);
       }
 
       document.getElementById("answer").innerText = "😕 Aucune réponse trouvée.";
+      document.getElementById("source").innerText = "";
     }
   </script>
 </body>
