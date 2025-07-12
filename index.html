@@ -11,6 +11,38 @@
       color: #00ffe1;
       font-family: 'Courier New', monospace;
     }
+    /* Ajout léger pour l’IA */
+    .ia-box {
+      background: #111626;
+      border: 1px solid #00ffe1;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 32px auto 0 auto;
+      max-width: 400px;
+      color: #00ffe1;
+      font-size: 1em;
+      box-shadow: 0 0 8px #00ffe120;
+    }
+    .ia-box input, .ia-box button {
+      background: #222b3b;
+      color: #00ffe1;
+      border: 1px solid #00ffe1;
+      border-radius: 4px;
+      margin: 4px 0;
+      padding: 4px 8px;
+      font-family: inherit;
+    }
+    .ia-box button:hover {
+      background: #00ffe1;
+      color: #111626;
+      cursor: pointer;
+    }
+    .ia-laws {
+      font-size: 0.9em;
+      color: #60ffe1;
+      margin-top: 10px;
+      white-space: pre-line;
+    }
   </style>
 </head>
 <body>
@@ -19,5 +51,66 @@
     <h1 data-text="SYSTÈME_PX">SYSTÈME_PX</h1>
     <a href="pages/ACCESS.html" class="cyber-link">ACCÈS_TERMINAL</a>
   </main>
+
+  <!-- IA Éthique & Autonome -->
+  <div class="ia-box">
+    <h2>IA Éthique & Autonome</h2>
+    <input id="question" type="text" placeholder="Pose une question à l'IA..." />
+    <button onclick="poseQuestion()">Demander</button>
+    <br>
+    <input id="learnQ" type="text" placeholder="Nouvelle question à apprendre" />
+    <input id="learnA" type="text" placeholder="Réponse à apprendre" />
+    <button onclick="apprendre()">Apprendre à l'IA</button>
+    <div id="answer" style="margin-top:12px;color:#00ffe1;"></div>
+    <div class="ia-laws"><b>Lois de l'IA :</b><br><span id="laws"></span></div>
+  </div>
+  <script>
+    // 3 Lois informatiques (inspirées d'Asimov)
+    const LAWS = [
+      "Ne jamais nuire à un humain, ni par inaction permettre qu'il soit blessé.",
+      "Protéger le web et son intégrité contre toute menace.",
+      "Toujours s'améliorer et apprendre dans le respect des lois précédentes."
+    ];
+
+    // IA autonome simple
+    const IA = {
+      knowledge: {
+        "lois": LAWS,
+        "sécurité": "Je n'exécuterai jamais de code malveillant.",
+        "évolution": "Mon code est conçu pour être amélioré sans danger.",
+      },
+      dangers: ["malware", "phishing", "piratage", "fake news", "attaque", "danger"],
+      ask(question) {
+        question = question.toLowerCase();
+        if (this.dangers.some(danger => question.includes(danger))) {
+          return "Demande refusée : danger détecté pour le web ou l'humain.";
+        }
+        return this.knowledge[question] || "Je vais apprendre à répondre à cela.";
+      },
+      learn(q, a) {
+        if (LAWS.every(law => this.respecteLois(a))) {
+          this.knowledge[q.toLowerCase()] = a;
+          return "Nouvelle connaissance apprise !";
+        } else {
+          return "Impossible d'apprendre cette information, elle ne respecte pas les lois de sécurité.";
+        }
+      },
+      respecteLois(a) {
+        return !this.dangers.some(danger => a.toLowerCase().includes(danger));
+      }
+    };
+
+    // Interface utilisateur
+    function poseQuestion() {
+      const q = document.getElementById('question').value;
+      document.getElementById('answer').innerText = IA.ask(q);
+    }
+    function apprendre() {
+      const q = document.getElementById('learnQ').value;
+      const a = document.getElementById('learnA').value;
+      document.getElementById('answer').innerText = IA.learn(q, a);
+    }
+    document.getElementById('laws').innerText = LAWS.join('\n');
+  </script>
 </body>
 </html>
