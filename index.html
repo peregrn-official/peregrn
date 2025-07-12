@@ -11,16 +11,13 @@
       color: #00ffe1;
       font-family: 'Courier New', monospace;
     }
-    /* Ajout léger pour l’IA */
     .ia-box {
       background: #111626;
       border: 1px solid #00ffe1;
       border-radius: 8px;
       padding: 16px;
-      margin: 32px auto 0 auto;
+      margin: 32px auto;
       max-width: 400px;
-      color: #00ffe1;
-      font-size: 1em;
       box-shadow: 0 0 8px #00ffe120;
     }
     .ia-box input, .ia-box button {
@@ -57,7 +54,6 @@
     <a href="pages/ACCESS.html" class="cyber-link">ACCÈS_TERMINAL</a>
   </main>
 
-  <!-- IA Éthique & Autonome + Internet -->
   <div class="ia-box">
     <h2>IA Internet & Éthique</h2>
     <input id="question" type="text" placeholder="Pose une question à l'IA..." />
@@ -66,87 +62,88 @@
     <div id="source" class="ia-source"></div>
     <div class="ia-laws"><b>Lois de l'IA :</b><br><span id="laws"></span></div>
   </div>
+
   <script>
-    // 3 Lois informatiques (inspirées d'Asimov)
     const LAWS = [
       "Ne jamais nuire à un humain, ni par inaction permettre qu'il soit blessé.",
       "Protéger le web et son intégrité contre toute menace.",
       "Toujours s'améliorer et apprendre dans le respect des lois précédentes."
     ];
 
-    // Base IA locale
     const IA = {
       knowledge: {
         "lois": LAWS,
+        "bonjour": "👋 Bonjour ! Une salutation universelle pour commencer la journée.",
+        "merci": "🙏 Expression de gratitude souvent accompagnée d’un sourire.",
         "sécurité": "Je n'exécuterai jamais de code malveillant.",
-        "évolution": "Mon code est conçu pour être amélioré sans danger.",
+        "évolution": "Mon code est conçu pour être amélioré sans danger."
       },
       dangers: ["malware", "phishing", "piratage", "fake news", "attaque", "danger"],
       ask(question) {
         question = question.toLowerCase();
-        if (this.dangers.some(danger => question.includes(danger))) {
-          return "Demande refusée : danger détecté pour le web ou l'humain.";
+        if (this.dangers.some(d => question.includes(d))) {
+          return "⚠️ Demande refusée : danger détecté pour le web ou l'humain.";
         }
         return this.knowledge[question] || null;
       },
       learn(q, a) {
-        if (LAWS.every(law => this.respecteLois(a))) {
+        if (LAWS.every(l => this.respecteLois(a))) {
           this.knowledge[q.toLowerCase()] = a;
-          return "Nouvelle connaissance apprise !";
+          return "💡 Nouvelle connaissance apprise !";
         } else {
-          return "Impossible d'apprendre cette information, elle ne respecte pas les lois de sécurité.";
+          return "🚫 Impossible d'apprendre cette information, elle ne respecte pas les lois.";
         }
       },
       respecteLois(a) {
-        return !this.dangers.some(danger => a.toLowerCase().includes(danger));
+        return !this.dangers.some(d => a.toLowerCase().includes(d));
       }
     };
 
-    // Affichage des lois
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", () => {
       document.getElementById('laws').innerText = LAWS.join('\n');
     });
 
-    // IA Internet
     async function askIA() {
-      const q = document.getElementById('question').value;
-      document.getElementById('answer').innerText = "Recherche en cours...";
+      const q = document.getElementById('question').value.trim();
+      document.getElementById('answer').innerText = "🔎 Recherche en cours...";
       document.getElementById('source').innerText = "";
-      // 1. IA locale (protection basique)
+
       const localAnswer = IA.ask(q);
       if (localAnswer) {
         document.getElementById('answer').innerText = localAnswer;
-        document.getElementById('source').innerText = "Source : IA locale";
+        document.getElementById('source').innerText = "🧠 Source : IA locale";
         return;
       }
-      // 2. Tente OpenAI (via backend sécurisé)
+
       try {
-        // !!! Remplace l'URL par celle de ton serveur backend !!!
         const openaiAnswer = await fetch('https://ton-backend.com/openai', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ prompt: q })
         }).then(res => res.json());
+
         if (openaiAnswer && openaiAnswer.answer) {
           document.getElementById('answer').innerText = openaiAnswer.answer;
-          document.getElementById('source').innerText = "Réponse générée par IA (OpenAI)";
-          IA.learn(q, openaiAnswer.answer); // Apprentissage auto
+          document.getElementById('source').innerText = "🤖 Réponse générée par IA (OpenAI)";
+          IA.learn(q, openaiAnswer.answer);
           return;
         }
       } catch (e) {
-        // Si API OpenAI échoue, tente Wikipedia
+        // Si OpenAI est indisponible, on utilise Wikipedia
       }
-      // 3. Secours Wikipedia
+
       fetch(`https://fr.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(q)}`)
         .then(res => res.json())
         .then(data => {
-          document.getElementById('answer').innerText = data.extract || "Pas de réponse trouvée sur Wikipédia.";
-          document.getElementById('source').innerHTML = data.content_urls ? `<a href="${data.content_urls.desktop.page}" target="_blank">Source Wikipédia</a>` : "";
-          if(data.extract) IA.learn(q, data.extract); // Apprentissage auto
+          const extrait = data.extract || "😕 Pas de réponse trouvée sur Wikipédia.";
+          document.getElementById('answer').innerText = extrait;
+          document.getElementById('source').innerHTML = data.content_urls?.desktop?.page
+            ? `<a href="${data.content_urls.desktop.page}" target="_blank">📚 Source Wikipédia</a>`
+            : "";
+          if (data.extract) IA.learn(q, data.extract);
         })
         .catch(() => {
-          document.getElementById('answer').innerText = "Erreur lors de la connexion à Wikipédia.";
-          document.getElementById('source').innerText = "";
+          document.getElementById('answer').innerText = "❌ Erreur lors de la connexion à Wikipédia.";
         });
     }
   </script>
