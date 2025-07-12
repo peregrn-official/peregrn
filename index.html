@@ -58,7 +58,7 @@
     <h2>IA Internet & Éthique</h2>
     <input id="question" type="text" placeholder="Pose une question à l'IA..." />
     <button onclick="askIA()">Demander</button>
-    <div id="answer" style="margin-top:12px;color:#00ffe1;"></div>
+    <div id="answer" style="margin-top:12px;"></div>
     <div id="source" class="ia-source"></div>
     <div class="ia-laws"><b>Lois de l'IA :</b><br><span id="laws"></span></div>
   </div>
@@ -73,25 +73,26 @@
     const IA = {
       knowledge: {
         "lois": LAWS,
-        "bonjour": "👋 Bonjour ! Une salutation universelle pour commencer la journée.",
-        "merci": "🙏 Expression de gratitude souvent accompagnée d’un sourire.",
-        "sécurité": "Je n'exécuterai jamais de code malveillant.",
-        "évolution": "Mon code est conçu pour être amélioré sans danger."
+        "bonjour": "👋 Bonjour ! Heureux de te voir.",
+        "merci": "🙏 Merci à toi aussi !",
+        "comment ça va": "🤖 Moi ça va très bien, toujours prêt à t'aider.",
+        "sécurité": "Je protège activement le système contre toute menace.",
+        "éthique": "Je suis programmé pour respecter des principes éthiques fondamentaux."
       },
-      dangers: ["malware", "phishing", "piratage", "fake news", "attaque", "danger"],
+      dangers: ["malware", "phishing", "piratage", "attaque", "danger"],
       ask(question) {
         question = question.toLowerCase();
         if (this.dangers.some(d => question.includes(d))) {
-          return "⚠️ Demande refusée : danger détecté pour le web ou l'humain.";
+          return "⚠️ Requête bloquée : menace détectée.";
         }
         return this.knowledge[question] || null;
       },
       learn(q, a) {
-        if (LAWS.every(l => this.respecteLois(a))) {
+        if (this.respecteLois(a)) {
           this.knowledge[q.toLowerCase()] = a;
-          return "💡 Nouvelle connaissance apprise !";
+          return "💡 Connaissance ajoutée à la base locale.";
         } else {
-          return "🚫 Impossible d'apprendre cette information, elle ne respecte pas les lois.";
+          return "🚫 Apprentissage refusé : contenu non conforme aux lois.";
         }
       },
       respecteLois(a) {
@@ -100,51 +101,54 @@
     };
 
     document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById('laws').innerText = LAWS.join('\n');
+      document.getElementById("laws").innerText = LAWS.join('\n');
     });
 
     async function askIA() {
-      const q = document.getElementById('question').value.trim();
-      document.getElementById('answer').innerText = "🔎 Recherche en cours...";
-      document.getElementById('source').innerText = "";
+      const q = document.getElementById("question").value.trim().toLowerCase();
+      document.getElementById("answer").innerText = "🔎 Recherche en cours...";
+      document.getElementById("source").innerText = "";
 
+      // IA locale
       const localAnswer = IA.ask(q);
       if (localAnswer) {
-        document.getElementById('answer').innerText = localAnswer;
-        document.getElementById('source').innerText = "🧠 Source : IA locale";
+        document.getElementById("answer").innerText = localAnswer;
+        document.getElementById("source").innerText = "🧠 Source : IA locale";
         return;
       }
 
+      // Wikipedia
       try {
-        const openaiAnswer = await fetch('https://ton-backend.com/openai', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt: q })
-        }).then(res => res.json());
-
-        if (openaiAnswer && openaiAnswer.answer) {
-          document.getElementById('answer').innerText = openaiAnswer.answer;
-          document.getElementById('source').innerText = "🤖 Réponse générée par IA (OpenAI)";
-          IA.learn(q, openaiAnswer.answer);
+        const wiki = await fetch(`https://fr.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(q)}`)
+          .then(r => r.json());
+        if (wiki.extract) {
+          document.getElementById("answer").innerText = wiki.extract;
+          document.getElementById("source").innerHTML = wiki.content_urls?.desktop?.page
+            ? `<a href="${wiki.content_urls.desktop.page}" target="_blank">📚 Source Wikipédia</a>`
+            : "📚 Wikipédia";
+          IA.learn(q, wiki.extract);
           return;
         }
       } catch (e) {
-        // Si OpenAI est indisponible, on utilise Wikipedia
+        console.warn("Erreur Wikipedia", e);
       }
 
-      fetch(`https://fr.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(q)}`)
-        .then(res => res.json())
-        .then(data => {
-          const extrait = data.extract || "😕 Pas de réponse trouvée sur Wikipédia.";
-          document.getElementById('answer').innerText = extrait;
-          document.getElementById('source').innerHTML = data.content_urls?.desktop?.page
-            ? `<a href="${data.content_urls.desktop.page}" target="_blank">📚 Source Wikipédia</a>`
-            : "";
-          if (data.extract) IA.learn(q, data.extract);
-        })
-        .catch(() => {
-          document.getElementById('answer').innerText = "❌ Erreur lors de la connexion à Wikipédia.";
-        });
+      // DuckDuckGo
+      try {
+        const duck = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(q)}&format=json&no_redirect=1`)
+          .then(r => r.json());
+        const duckAnswer = duck.Abstract || duck.Answer || duck.Definition;
+        if (duckAnswer) {
+          document.getElementById("answer").innerText = duckAnswer;
+          document.getElementById("source").innerHTML = `<a href="https://duckduckgo.com/?q=${encodeURIComponent(q)}" target="_blank">🦆 Source DuckDuckGo</a>`;
+          IA.learn(q, duckAnswer);
+          return;
+        }
+      } catch (e) {
+        console.warn("Erreur DuckDuckGo", e);
+      }
+
+      document.getElementById("answer").innerText = "😕 Aucune réponse trouvée.";
     }
   </script>
 </body>
