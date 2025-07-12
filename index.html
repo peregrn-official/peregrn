@@ -43,6 +43,11 @@
       margin-top: 10px;
       white-space: pre-line;
     }
+    .ia-source {
+      font-size: 0.85em;
+      color: #55e6c1;
+      margin-top: 8px;
+    }
   </style>
 </head>
 <body>
@@ -52,16 +57,13 @@
     <a href="pages/ACCESS.html" class="cyber-link">ACCÈS_TERMINAL</a>
   </main>
 
-  <!-- IA Éthique & Autonome -->
+  <!-- IA Éthique & Autonome + Internet -->
   <div class="ia-box">
-    <h2>IA Éthique & Autonome</h2>
+    <h2>IA Internet & Éthique</h2>
     <input id="question" type="text" placeholder="Pose une question à l'IA..." />
-    <button onclick="poseQuestion()">Demander</button>
-    <br>
-    <input id="learnQ" type="text" placeholder="Nouvelle question à apprendre" />
-    <input id="learnA" type="text" placeholder="Réponse à apprendre" />
-    <button onclick="apprendre()">Apprendre à l'IA</button>
+    <button onclick="askIA()">Demander</button>
     <div id="answer" style="margin-top:12px;color:#00ffe1;"></div>
+    <div id="source" class="ia-source"></div>
     <div class="ia-laws"><b>Lois de l'IA :</b><br><span id="laws"></span></div>
   </div>
   <script>
@@ -72,7 +74,7 @@
       "Toujours s'améliorer et apprendre dans le respect des lois précédentes."
     ];
 
-    // IA autonome simple
+    // Base IA locale
     const IA = {
       knowledge: {
         "lois": LAWS,
@@ -85,7 +87,7 @@
         if (this.dangers.some(danger => question.includes(danger))) {
           return "Demande refusée : danger détecté pour le web ou l'humain.";
         }
-        return this.knowledge[question] || "Je vais apprendre à répondre à cela.";
+        return this.knowledge[question] || null;
       },
       learn(q, a) {
         if (LAWS.every(law => this.respecteLois(a))) {
@@ -100,17 +102,53 @@
       }
     };
 
-    // Interface utilisateur
-    function poseQuestion() {
+    // Affichage des lois
+    document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById('laws').innerText = LAWS.join('\n');
+    });
+
+    // IA Internet
+    async function askIA() {
       const q = document.getElementById('question').value;
-      document.getElementById('answer').innerText = IA.ask(q);
+      document.getElementById('answer').innerText = "Recherche en cours...";
+      document.getElementById('source').innerText = "";
+      // 1. IA locale (protection basique)
+      const localAnswer = IA.ask(q);
+      if (localAnswer) {
+        document.getElementById('answer').innerText = localAnswer;
+        document.getElementById('source').innerText = "Source : IA locale";
+        return;
+      }
+      // 2. Tente OpenAI (via backend sécurisé)
+      try {
+        // !!! Remplace l'URL par celle de ton serveur backend !!!
+        const openaiAnswer = await fetch('https://ton-backend.com/openai', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: q })
+        }).then(res => res.json());
+        if (openaiAnswer && openaiAnswer.answer) {
+          document.getElementById('answer').innerText = openaiAnswer.answer;
+          document.getElementById('source').innerText = "Réponse générée par IA (OpenAI)";
+          IA.learn(q, openaiAnswer.answer); // Apprentissage auto
+          return;
+        }
+      } catch (e) {
+        // Si API OpenAI échoue, tente Wikipedia
+      }
+      // 3. Secours Wikipedia
+      fetch(`https://fr.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(q)}`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('answer').innerText = data.extract || "Pas de réponse trouvée sur Wikipédia.";
+          document.getElementById('source').innerHTML = data.content_urls ? `<a href="${data.content_urls.desktop.page}" target="_blank">Source Wikipédia</a>` : "";
+          if(data.extract) IA.learn(q, data.extract); // Apprentissage auto
+        })
+        .catch(() => {
+          document.getElementById('answer').innerText = "Erreur lors de la connexion à Wikipédia.";
+          document.getElementById('source').innerText = "";
+        });
     }
-    function apprendre() {
-      const q = document.getElementById('learnQ').value;
-      const a = document.getElementById('learnA').value;
-      document.getElementById('answer').innerText = IA.learn(q, a);
-    }
-    document.getElementById('laws').innerText = LAWS.join('\n');
   </script>
 </body>
 </html>
